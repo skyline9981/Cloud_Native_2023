@@ -1,7 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View,Dimensions } from 'react-native'
 
-import HomeScreen2 from './src/screens/HomeScreen2'
 import HomeScreen from './src/screens/HomeScreen'
 import RequestScreen from './src/screens/RequestScreen'
 import DestinationScreen from './src/screens/DestinationScreen'
