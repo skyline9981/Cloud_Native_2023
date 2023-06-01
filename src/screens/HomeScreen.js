@@ -67,16 +67,23 @@ useEffect(()=>{
             </View>
             <ScrollView bounces ={false}>
                 <View style ={styles.home}>
-                    <Text style = {styles.text1}>Destress your commute</Text>
+                    <Text style = {styles.text1}>Choose your role!</Text>
                     <View style ={styles.view1}>
                         <View  style ={styles.view8}>
-                            <Text style ={styles.text2}>Read a book.Take a nap. Stare out the window</Text>
                             <TouchableOpacity onPress ={()=>{navigation.navigate("RequestScreen",{state:0})}}>
                                 <View style ={styles.button1}>
-                                    <Text style = {styles.button1Text}>Ride with Uber</Text>
+                                    <Text style = {styles.button1Text}>Drive with Uber</Text>
                                 </View>
                             </TouchableOpacity>
                         </View>
+                        <View  style ={styles.view8}>
+                            <TouchableOpacity onPress ={()=>{navigation.navigate("WpRequestScreen",{state:0})}}>
+                                <View style ={styles.button1}>
+                                    <Text style = {styles.button1Text}>Be a Driver</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                        
                         <View>
                             <Image 
                                 style ={styles.image1}

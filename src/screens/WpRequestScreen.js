@@ -2,10 +2,10 @@ import React,{useState,useContext,useEffect,useRef,useMemo,useCallback} from 're
 import { StyleSheet, Image,View,Text,Dimensions,TouchableOpacity} from 'react-native'
 import BottomSheet, { BottomSheetFlatList,BottomSheetSectionList } from '@gorhom/bottom-sheet';
 import { Avatar,Icon} from 'react-native-elements';
-import MapComponent from '../components/MapComponent'
+import MapComponent from '../components/MapComponent2'
 import { colors,parameters } from '../global/styles'
 import { rideData } from '../global/data';
-import { OriginContext,DestinationContext } from '../contexts/contexts';
+import { OriginContext,DestinationContext,WaypointContext } from '../contexts/contexts';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -18,7 +18,9 @@ export default function RequestScreen({navigation,route}) {
     const {destination,dispatchDestination} = useContext(DestinationContext)
     const [userDestination,setUserDestination] = useState({latitude:destination.latitude,
                                                 longitude:destination.longitude}) 
-                                                
+    const {Waypoint,dispatchWaypoint} = useContext(WaypointContext)
+    const [userWaypoint,setUserWaypoint] = useState({latitude:destination.latitude,
+                                                longitude:destination.longitude}) 
    const bottomsheet1 =useRef(1)  ;  
    
    const snapPoints1 = useMemo(()=>['30%'],[])
@@ -28,8 +30,10 @@ useEffect(()=>{
     setUserOrigin({latitude:origin.latitude,
         longitude:origin.longitude});
     setUserDestination({latitude:destination.latitude,
-        longitude:destination.longitude})    
-},[origin,destination])
+        longitude:destination.longitude});
+        setUserWaypoint({latitude:Waypoint.latitude,
+            longitude:Waypoint.longitude})
+},[origin,destination,Waypoint])
 
 
 const renderFlatListItems = useCallback(({item})=>(
@@ -112,7 +116,7 @@ const renderFlatListItems = useCallback(({item})=>(
                    
                 </View>
             </View>
-            <MapComponent userOrigin ={userOrigin} userDestination = {userDestination} />
+            <MapComponent userOrigin ={userOrigin} userDestination = {userDestination} userWaypoint ={userWaypoint}/>
             <BottomSheet
                 ref={bottomsheet1}
                 index={route.params.state}

@@ -4,7 +4,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import { Avatar,Icon} from 'react-native-elements';
 import { colors,parameters } from '../global/styles'
 import {GOOGLE_MAPS_APIKEY} from "@env";
-import { OriginContext,DestinationContext } from '../contexts/contexts';
+import { OriginContext,DestinationContext,WaypointContext } from '../contexts/contexts';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -15,12 +15,13 @@ const DestinationScreen = ({navigation}) => {
 
     const {dispatchOrigin} = useContext(OriginContext)
     const {dispatchDestination} = useContext(DestinationContext)
+    const {dispatchWaypoint} = useContext(WaypointContext)
 
     const textInput1 = useRef(4);
     const textInput2 = useRef(5);
 
     const[destination,setDestination] = useState(false)
-
+    const[waypoints,setwaypoints] = useState(false)
     return (
         <>
             <View style = {styles.view2}>
@@ -86,7 +87,7 @@ const DestinationScreen = ({navigation}) => {
 
             />
             }
-            {destination === true &&
+            {destination === true && waypoints===false &&
             <GooglePlacesAutocomplete 
                 nearbyPlacesAPI = 'GooglePlacesSearch'
                 placeholder ="Going to..."
@@ -107,6 +108,38 @@ const DestinationScreen = ({navigation}) => {
 
                 onPress= {(data,details = null)=>{
                     dispatchDestination({type:"ADD_DESTINATION",payload:{
+                        latitude:details.geometry.location.lat,
+                        longitude:details.geometry.location.lng,
+                        address:details.formatted_address,
+                        name:details.name
+                    }})
+                    setwaypoints(true)
+                    //navigation.navigate("RequestScreen",{state:0})
+                }}
+
+            />
+            }
+            {waypoints === true &&
+            <GooglePlacesAutocomplete 
+                nearbyPlacesAPI = 'GooglePlacesSearch'
+                placeholder ="Going to..."
+                listViewDisplayed = "auto"
+                debounce ={400}
+                currentLocation ={true}
+                currentLocationLabel='Current location'
+                ref ={textInput2}
+                minLength ={2}
+                enablePoweredByContainer = {false}
+                fetchDetails ={true}
+                autoFocus ={true}
+                styles = {autoComplete}
+                query ={{
+                    key:GOOGLE_MAPS_APIKEY,
+                    language:"en"
+                }}
+
+                onPress= {(data,details = null)=>{
+                    dispatchWaypoint({type:"ADD_WAYPOINT",payload:{
                         latitude:details.geometry.location.lat,
                         longitude:details.geometry.location.lng,
                         address:details.formatted_address,

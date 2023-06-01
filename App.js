@@ -2,8 +2,8 @@ import React from 'react'
 import { StyleSheet, Text, View,Dimensions } from 'react-native'
 
 import HomeScreen from './src/screens/HomeScreen'
-import RequestScreen from './src/screens/RequestScreen'
-import DestinationScreen from './src/screens/DestinationScreen'
+import RequestScreen from './src/screens/WpRequestScreen'
+import DestinationScreen from './src/screens/WpDestinationScreen'
  import { OriginContextProvider,DestinationContextProvider ,WaypointContextProvider} from './src/contexts/contexts'
  import RoootNavigator from './src/navigations/RootNavigator'
 

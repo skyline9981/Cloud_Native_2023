@@ -30,7 +30,6 @@ export default class MapComponent extends Component {
           )
         }
       },500)
-      console.log(this.props.userOrigin)
    }
 
     render() {
@@ -60,22 +59,19 @@ export default class MapComponent extends Component {
                             />
                         </Marker>
                      }
-                    {this.props.userDestination.latitude !== null &&this.props.userWaypoint.latitude !== null &&
+                    {this.props.userDestination.latitude !== null &&
                         <MapViewDirections 
                           origin={this.props.userOrigin}
                           destination={this.props.userDestination}
-                          waypoints={[this.props.userWaypoint]}
                           apikey={GOOGLE_MAPS_APIKEY}
                           strokeWidth={4}
                           strokeColor={colors.black}
                         />
-                        
                     }
                 </MapView> 
             </View>
         )
     }
-    
 }
 
 const styles = StyleSheet.create({
