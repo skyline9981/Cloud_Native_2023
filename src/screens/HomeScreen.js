@@ -68,7 +68,7 @@ useEffect(()=>{
             </View>
             <ScrollView bounces ={false}>
                 <View style ={styles.home}>
-                    <Text style = {styles.text1}>Choose your role!</Text>
+                    <Text style = {styles.text1}>Choose your role!!!</Text>
                     <View style ={styles.view1}>
                         <View  style ={styles.view8}>
                             <TouchableOpacity onPress={() => {
@@ -85,8 +85,7 @@ useEffect(()=>{
                                     <Text style = {styles.button1Text}>Drive with Uber</Text>
                                 </View>
                             </TouchableOpacity>
-                        </View>
-                        <View  style ={styles.view8}>
+                        
                             <TouchableOpacity onPress={() => {
                                 navigation.navigate("WpRequestScreen", { state: 0 })
                                 axios.post(URL + '/', { current_state: 'driver login' })
@@ -102,7 +101,6 @@ useEffect(()=>{
                                 </View>
                             </TouchableOpacity>
                         </View>
-                        
                         <View>
                             <Image 
                                 style ={styles.image1}
@@ -157,8 +155,8 @@ useEffect(()=>{
                                 />
                             </View>
                             <View>
-                                <Text style ={{fontSize:18,color:colors.black}}>32 Olivia Rd</Text>
-                                <Text style ={{color:colors.grey3}}>Klipfontein 83-Ir, Boksburg</Text>
+                                <Text style ={{fontSize:18,color:colors.black}}>新竹</Text>
+                                <Text style ={{color:colors.grey3}}>縣竹北市高鐵七路6號</Text>
                             </View>
                         </View>
                         <View>
@@ -180,8 +178,8 @@ useEffect(()=>{
                                 />
                             </View>
                             <View>
-                                <Text style ={{fontSize:18,color:colors.black}}>32 Olivia Rd</Text>
-                                <Text style ={{color:colors.grey3}}>Klipfontein 83-Ir, Boksburg</Text>
+                                <Text style ={{fontSize:18,color:colors.black}}>小木屋鬆餅 交大店</Text>
+                                <Text style ={{color:colors.grey3}}>大學路1001號交通大學資服務中心前</Text>
                             </View>
                         </View>
                         <View>
