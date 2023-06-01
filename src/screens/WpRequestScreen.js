@@ -92,7 +92,7 @@ const renderFlatListItems = useCallback(({item})=>(
                         />
                     </View>
                     <View>
-                        <TouchableOpacity onPress ={()=>navigation.navigate("DestinationScreen")}>
+                        <TouchableOpacity onPress ={()=>navigation.navigate("WpDestinationScreen")}>
                             <View style = {styles.view6}>
                                 <Text style ={styles.text1}>From where</Text>
                             </View>

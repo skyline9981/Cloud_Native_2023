@@ -146,7 +146,7 @@ const DestinationScreen = ({navigation}) => {
                         name:details.name
                     }})
 
-                    navigation.navigate("RequestScreen",{state:0})
+                    navigation.navigate("WpRequestScreen",{state:0})
                 }}
 
             />
