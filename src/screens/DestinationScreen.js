@@ -82,11 +82,14 @@ const DestinationScreen = ({navigation}) => {
                         address:details.formatted_address,
                         name:details.name
                     }})
+
+                    setDestination(true)
+
                     axios.get(URL+'/ttt')
                         .then(response => {
                             console.log(response.data);
-                            if (response.data.current_state1 === "true") setDestination(true);
-                            else console.log("false");
+                            // if (response.data.current_state1 === "true") ;
+                            // else console.log("false");
                         })
                         .catch(error => {
                             console.error(error);
