@@ -1,5 +1,5 @@
 import React,{useState,useContext,useEffect,useRef,useMemo,useCallback} from 'react'
-import { StyleSheet, Image,View,Text,Dimensions,TouchableOpacity} from 'react-native'
+import { StyleSheet, Image,View,Text,Dimensions,TouchableOpacity,TextInput} from 'react-native'
 import BottomSheet, { BottomSheetFlatList,BottomSheetSectionList } from '@gorhom/bottom-sheet';
 import { Avatar,Icon} from 'react-native-elements';
 import MapComponent from '../components/MapComponent2'
@@ -12,19 +12,23 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 
 export default function RequestScreen({navigation,route}) {
+    const [text, onChangeText] = React.useState('Your name    ');
+    const [number, onChangeNumber] = React.useState('');
+
+
     const {origin,dispatchOrigin} = useContext(OriginContext)
     const [userOrigin,setUserOrigin] = useState({latitude:origin.latitude,
-                                                  longitude:origin.longitude})
+                                                    longitude:origin.longitude})
     const {destination,dispatchDestination} = useContext(DestinationContext)
     const [userDestination,setUserDestination] = useState({latitude:destination.latitude,
                                                 longitude:destination.longitude}) 
     const {Waypoint,dispatchWaypoint} = useContext(WaypointContext)
     const [userWaypoint,setUserWaypoint] = useState({latitude:destination.latitude,
                                                 longitude:destination.longitude}) 
-   const bottomsheet1 =useRef(1)  ;  
-   
-   const snapPoints1 = useMemo(()=>['30%'],[])
-   const handleSheetChange1  = useCallback((index)=>{},[])
+    const bottomsheet1 =useRef(1)  ;  
+    
+    const snapPoints1 = useMemo(()=>['30%'],[])
+    const handleSheetChange1  = useCallback((index)=>{},[])
 
 useEffect(()=>{
     setUserOrigin({latitude:origin.latitude,
@@ -67,7 +71,6 @@ const renderFlatListItems = useCallback(({item})=>(
                 />
             </View>
             <View style = {styles.view2}>
-                <TouchableOpacity>
                     <View style ={styles.view3}>
                         <Avatar 
                             rounded
@@ -75,15 +78,20 @@ const renderFlatListItems = useCallback(({item})=>(
                             size ={30}
                             source = {require('../../assets/blankProfilePic.jpg')}
                             />
-                          <Text style ={{marginLeft:5}}>For Someone</Text>
-                          <Icon 
-                              type ="material-community"
-                              name ="chevron-down"
-                              color ={colors.grey1}
-                              size ={26}
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={onChangeText}
+                                value={text}
                             />
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={onChangeNumber}
+                                value={number}
+                                placeholder="input time"
+                                keyboardType="numeric"
+                            />
+                            
                     </View>
-                </TouchableOpacity>
                 <View style ={styles.view4}>
                     <View>
                         <Image 
@@ -139,9 +147,11 @@ const renderFlatListItems = useCallback(({item})=>(
                                         size ={20}
                                         />
                                 </View>
-                                <View>
-                                   <Text style ={styles.text9}>Saved Places</Text> 
+                                <TouchableOpacity onPress ={()=>{navigation.navigate("MatchScreen",{state:0})}}>
+                                <View style ={styles.button1}>
+                                    <Text style = {styles.button1Text}>Match!!</Text>
                                 </View>
+                            </TouchableOpacity>
                         </View>}
                 ListFooterComponent={
                     <View>
