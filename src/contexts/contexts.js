@@ -1,9 +1,9 @@
 import React,{createContext,useReducer} from 'react';
-import {OriginReducer,DestinationReducer} from  '../reducers/reducers'
+import {OriginReducer,DestinationReducer,WaypointReducer} from  '../reducers/reducers'
 
 export const OriginContext = createContext()
 export const DestinationContext = createContext()
-
+export const WaypointContext = createContext()
 
 export const OriginContextProvider = (props)=>{
     const[origin,dispatchOrigin] =useReducer(OriginReducer,{
@@ -35,5 +35,21 @@ export const DestinationContextProvider = (props)=>{
             >
             {props.children}
         </DestinationContext.Provider>
+    )
+}
+
+export const WaypointContextProvider = (props)=>{
+    const[Waypoint,dispatchWaypoint] =useReducer(WaypointReducer,{
+                latitude:null,
+                longitude:null,
+                address:"",
+                name:""
+    })
+    return(
+        <WaypointContext.Provider
+                value ={{Waypoint,dispatchWaypoint}}
+            >
+            {props.children}
+        </WaypointContext.Provider>
     )
 }

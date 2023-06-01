@@ -27,3 +27,17 @@ export const DestinationReducer = (state,action)=>{
                 return state
     }
 }
+
+export const WaypointReducer = (state,action)=>{
+    switch(action.type){
+        case 'ADD_WAYPOINT':
+                return{
+                    latitude:action.payload.latitude,
+                    longitude:action.payload.longitude,
+                    address:action.payload.address,
+                    name:action.payload.name
+                }
+            default:
+                return state
+    }
+}

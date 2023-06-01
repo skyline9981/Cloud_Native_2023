@@ -4,7 +4,7 @@ import { StyleSheet, Text, View,Dimensions } from 'react-native'
 import HomeScreen from './src/screens/HomeScreen'
 import RequestScreen from './src/screens/RequestScreen'
 import DestinationScreen from './src/screens/DestinationScreen'
- import { OriginContextProvider,DestinationContextProvider } from './src/contexts/contexts'
+ import { OriginContextProvider,DestinationContextProvider ,WaypointContextProvider} from './src/contexts/contexts'
  import RoootNavigator from './src/navigations/RootNavigator'
 
 
@@ -14,12 +14,13 @@ const App = () => {
     //  <DestinationScreen/>
     //</View>
     //<RoootNavigator />
+   <WaypointContextProvider>
    <DestinationContextProvider>
      <OriginContextProvider>
          <RoootNavigator />
     </OriginContextProvider>
     </DestinationContextProvider>
-   
+    </WaypointContextProvider>
   )
 }
 
