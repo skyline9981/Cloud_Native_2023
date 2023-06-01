@@ -60,7 +60,7 @@ const DestinationScreen = ({navigation}) => {
                 placeholder ="From..."
                 listViewDisplayed = "auto"
                 debounce ={400}
-                currentLocation ={true}
+                currentLocation ={false}
                 currentLocationLabel='Current location'
                 ref ={textInput1}
                 minLength ={2}
@@ -93,7 +93,7 @@ const DestinationScreen = ({navigation}) => {
                 placeholder ="Going to..."
                 listViewDisplayed = "auto"
                 debounce ={400}
-                currentLocation ={true}
+                currentLocation ={false}
                 currentLocationLabel='Current location'
                 ref ={textInput2}
                 minLength ={2}
@@ -125,7 +125,7 @@ const DestinationScreen = ({navigation}) => {
                 placeholder ="Going to..."
                 listViewDisplayed = "auto"
                 debounce ={400}
-                currentLocation ={true}
+                currentLocation ={false}
                 currentLocationLabel='Current location'
                 ref ={textInput2}
                 minLength ={2}
