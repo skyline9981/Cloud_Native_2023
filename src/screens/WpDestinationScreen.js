@@ -3,7 +3,8 @@ import { StyleSheet, Text, View,Dimensions,TouchableOpacity,} from 'react-native
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { Avatar,Icon} from 'react-native-elements';
 import { colors,parameters } from '../global/styles'
-import {GOOGLE_MAPS_APIKEY} from "@env";
+import { GOOGLE_MAPS_APIKEY } from "@env";
+import { URL } from "@env";
 import { OriginContext,DestinationContext,WaypointContext } from '../contexts/contexts';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -83,7 +84,7 @@ const DestinationScreen = ({navigation}) => {
                     }})
 
                     setDestination(true)
-                    axios.post('http://172.18.9.90:5000/driver_start_point', {
+                    axios.post(URL + '/driver_start_point', {
                         address: details.formatted_address,
                         latitude: details.geometry.location.lat,
                         longitude: details.geometry.location.lng})
@@ -125,7 +126,7 @@ const DestinationScreen = ({navigation}) => {
                     }})
                     setwaypoints(true)
 
-                    axios.post('http://172.18.9.90:5000/driver_destination_point', {
+                    axios.post(URL + '/driver_destination_point', {
                         address: details.formatted_address,
                         latitude: details.geometry.location.lat,
                         longitude: details.geometry.location.lng })

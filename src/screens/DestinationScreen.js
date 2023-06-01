@@ -3,7 +3,8 @@ import { StyleSheet, Text, View,Dimensions,TouchableOpacity,} from 'react-native
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { Avatar,Icon} from 'react-native-elements';
 import { colors,parameters } from '../global/styles'
-import {GOOGLE_MAPS_APIKEY} from "@env";
+import { GOOGLE_MAPS_APIKEY } from "@env";
+import { URL } from "@env";
 import { OriginContext,DestinationContext } from '../contexts/contexts';
 import axios from 'axios';
 
@@ -81,7 +82,7 @@ const DestinationScreen = ({navigation}) => {
                         address:details.formatted_address,
                         name:details.name
                     }})
-                    axios.get('http://172.18.9.90:5000/ttt')
+                    axios.get(URL+'/ttt')
                         .then(response => {
                             console.log(response.data);
                             if (response.data.current_state1 === "true") setDestination(true);
@@ -92,7 +93,7 @@ const DestinationScreen = ({navigation}) => {
                         });
 
                     
-                    axios.post('http://172.18.9.90:5000/cus_start_point', {
+                    axios.post(URL + '/cus_start_point', {
                         address: details.formatted_address,
                         latitude: details.geometry.location.lat,
                         longitude: details.geometry.location.lng})
@@ -135,7 +136,7 @@ const DestinationScreen = ({navigation}) => {
 
                     navigation.navigate("RequestScreen", { state: 0 })
 
-                    axios.post('http://172.18.9.90:5000/cus_destination_point', {
+                    axios.post(URL + 'cus_destination_point', {
                         'address': details.formatted_address,
                         'latitude': details.geometry.location.lat,
                         'longitude': details.geometry.location.lng})
