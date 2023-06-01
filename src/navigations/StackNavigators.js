@@ -5,6 +5,7 @@ import WpRequestScreen from '../screens/WpRequestScreen';
 import WpDestinationScreen from '../screens/WpDestinationScreen';
 import RequestScreen from '../screens/RequestScreen';
 import DestinationScreen from '../screens/DestinationScreen';
+import MatchScreen from '../screens/MatchScreen';
 const Home = createNativeStackNavigator();
 
 export function HomeStack(){
@@ -33,6 +34,11 @@ export function HomeStack(){
             <Home.Screen 
                 name ="DestinationScreen"
                 component = {DestinationScreen}
+                options ={{headerShown:false}}
+            /> 
+            <Home.Screen 
+                name ="MatchScreen"
+                component = {MatchScreen}
                 options ={{headerShown:false}}
             /> 
         </Home.Navigator>
