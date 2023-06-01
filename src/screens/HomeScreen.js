@@ -9,6 +9,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width
 import { colors,parameters } from '../global/styles'
 import { filterData,carsAround } from '../global/data'
 import { mapStyle} from "../global/mapStyle"
+import axios from 'axios';
 
 const HomeScreen = ({navigation}) => {
 
@@ -70,14 +71,32 @@ useEffect(()=>{
                     <Text style = {styles.text1}>Choose your role!</Text>
                     <View style ={styles.view1}>
                         <View  style ={styles.view8}>
-                            <TouchableOpacity onPress ={()=>{navigation.navigate("RequestScreen",{state:0})}}>
+                            <TouchableOpacity onPress={() => {
+                                navigation.navigate("RequestScreen", { state: 0 })
+                                axios.post('http://172.18.9.90:5000/', { current_state: 'cus login' })
+                                    .then(response => {
+                                        console.log(response.data);
+                                    })
+                                    .catch(error => {
+                                        console.error(error);
+                                    });
+                            }}>
                                 <View style ={styles.button1}>
                                     <Text style = {styles.button1Text}>Drive with Uber</Text>
                                 </View>
                             </TouchableOpacity>
                         </View>
                         <View  style ={styles.view8}>
-                            <TouchableOpacity onPress ={()=>{navigation.navigate("WpRequestScreen",{state:0})}}>
+                            <TouchableOpacity onPress={() => {
+                                navigation.navigate("WpRequestScreen", { state: 0 })
+                                axios.post('http://172.18.9.90:5000/', { current_state: 'driver login' })
+                                    .then(response => {
+                                        console.log(response.data);
+                                    })
+                                    .catch(error => {
+                                        console.error(error);
+                                    });
+                            }}>
                                 <View style ={styles.button1}>
                                     <Text style = {styles.button1Text}>Be a Driver</Text>
                                 </View>

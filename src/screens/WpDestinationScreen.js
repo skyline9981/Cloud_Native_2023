@@ -83,6 +83,16 @@ const DestinationScreen = ({navigation}) => {
                     }})
 
                     setDestination(true)
+                    axios.post('http://172.18.9.90:5000/driver_start_point', {
+                        address: details.formatted_address,
+                        latitude: details.geometry.location.lat,
+                        longitude: details.geometry.location.lng})
+                        .then(response => {
+                            console.log(response.data);
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
                 }}
 
             />
@@ -114,7 +124,17 @@ const DestinationScreen = ({navigation}) => {
                         name:details.name
                     }})
                     setwaypoints(true)
-                    //navigation.navigate("RequestScreen",{state:0})
+
+                    axios.post('http://172.18.9.90:5000/driver_destination_point', {
+                        address: details.formatted_address,
+                        latitude: details.geometry.location.lat,
+                        longitude: details.geometry.location.lng })
+                        .then(response => {
+                            console.log(response.data);
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
                 }}
 
             />

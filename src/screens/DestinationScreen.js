@@ -5,6 +5,7 @@ import { Avatar,Icon} from 'react-native-elements';
 import { colors,parameters } from '../global/styles'
 import {GOOGLE_MAPS_APIKEY} from "@env";
 import { OriginContext,DestinationContext } from '../contexts/contexts';
+import axios from 'axios';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -82,6 +83,17 @@ const DestinationScreen = ({navigation}) => {
                     }})
 
                     setDestination(true)
+
+                    axios.post('http://172.18.9.90:5000/cus_start_point', {
+                        address: details.formatted_address,
+                        latitude: details.geometry.location.lat,
+                        longitude: details.geometry.location.lng})
+                        .then(response => {
+                            console.log(response.data);
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
                 }}
 
             />
@@ -113,7 +125,18 @@ const DestinationScreen = ({navigation}) => {
                         name:details.name
                     }})
 
-                    navigation.navigate("RequestScreen",{state:0})
+                    navigation.navigate("RequestScreen", { state: 0 })
+
+                    axios.post('http://172.18.9.90:5000/cus_destination_point', {
+                        'address': details.formatted_address,
+                        'latitude': details.geometry.location.lat,
+                        'longitude': details.geometry.location.lng})
+                        .then(response => {
+                            console.log(response.data);
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
                 }}
 
             />
