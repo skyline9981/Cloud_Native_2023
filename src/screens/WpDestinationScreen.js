@@ -6,6 +6,8 @@ import { colors,parameters } from '../global/styles'
 import { GOOGLE_MAPS_APIKEY } from "@env";
 import { URL } from "@env";
 import { OriginContext,DestinationContext,WaypointContext } from '../contexts/contexts';
+import axios from 'axios';
+
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;

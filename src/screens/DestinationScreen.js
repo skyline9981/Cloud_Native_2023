@@ -136,7 +136,7 @@ const DestinationScreen = ({navigation}) => {
 
                     navigation.navigate("RequestScreen", { state: 0 })
 
-                    axios.post(URL + 'cus_destination_point', {
+                    axios.post(URL + '/cus_destination_point', {
                         'address': details.formatted_address,
                         'latitude': details.geometry.location.lat,
                         'longitude': details.geometry.location.lng})
