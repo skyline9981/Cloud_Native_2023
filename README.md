@@ -14,3 +14,9 @@ yarn
 npx expo start
 [scan the QR code]
 ```
+
+## Network error troubleshoot
+
+```
+$env:REACT_NATIVE_PACKAGER_HOSTNAME = "your ip address"
+```
