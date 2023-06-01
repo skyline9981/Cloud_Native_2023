@@ -8,6 +8,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+current_state1 = "true"
 current_state = "not started"
 cus_start_point = "no enter"
 cus_destination_point = "no enter"
@@ -31,6 +32,13 @@ def get_data():
         data = request.get_json()
         current_state = data.get('current_state')
         return jsonify({'current_state': current_state})
+
+@app.route('/ttt', methods=["GET"])
+def get_data2():
+    global current_state1
+    if request.method == "GET":
+        return jsonify({'current_state1': current_state1})
+
 
 @app.route('/cus_start_point', methods=["GET","POST"])
 def get_position():

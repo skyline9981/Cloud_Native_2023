@@ -81,9 +81,17 @@ const DestinationScreen = ({navigation}) => {
                         address:details.formatted_address,
                         name:details.name
                     }})
+                    axios.get('http://172.18.9.90:5000/ttt')
+                        .then(response => {
+                            console.log(response.data);
+                            if (response.data.current_state1 === "true") setDestination(true);
+                            else console.log("false");
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
 
-                    setDestination(true)
-
+                    
                     axios.post('http://172.18.9.90:5000/cus_start_point', {
                         address: details.formatted_address,
                         latitude: details.geometry.location.lat,
