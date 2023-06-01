@@ -4,7 +4,7 @@ import { StyleSheet, Text, View,Dimensions ,ScrollView,Image,FlatList,TouchableO
 import { Icon} from 'react-native-elements'
 import MapView, { PROVIDER_GOOGLE,Marker} from 'react-native-maps'; 
 import * as Location from 'expo-location';
-
+import { URL } from "@env";
 const SCREEN_WIDTH = Dimensions.get('window').width
 import { colors,parameters } from '../global/styles'
 import { filterData,carsAround } from '../global/data'
@@ -73,7 +73,7 @@ useEffect(()=>{
                         <View  style ={styles.view8}>
                             <TouchableOpacity onPress={() => {
                                 navigation.navigate("RequestScreen", { state: 0 })
-                                axios.post('http://172.18.9.90:5000/', { current_state: 'cus login' })
+                                axios.post( URL +'/', { current_state: 'cus login' })
                                     .then(response => {
                                         console.log(response.data);
                                     })
@@ -89,7 +89,7 @@ useEffect(()=>{
                         <View  style ={styles.view8}>
                             <TouchableOpacity onPress={() => {
                                 navigation.navigate("WpRequestScreen", { state: 0 })
-                                axios.post('http://172.18.9.90:5000/', { current_state: 'driver login' })
+                                axios.post(URL + '/', { current_state: 'driver login' })
                                     .then(response => {
                                         console.log(response.data);
                                     })
