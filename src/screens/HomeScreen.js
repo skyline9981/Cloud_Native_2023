@@ -45,14 +45,30 @@ const getLocation = async()=>{
     }
 }
 
-const _map = useRef(1);
+// const [data, setdata] = useState({
+//     current_state: ""
+// });
 
+// const fetchData = async () => {
+//     try {
+//         const response = await axios.get(URL + '/');
+//         setdata({
+//             current_state: response.data.current_state,
+//         });
+//         console.log(response.data.current_state);
+//     } catch (error) {
+//         console.log('Fail:', error);
+//     }
+// };
+
+const _map = useRef(1);
 
 useEffect(()=>{
     checkPermission();
-    getLocation()
+    getLocation();
+    // fetchData()
    // console.log(latlng)
-,[]})
+},[])
 
 
     return (
@@ -68,6 +84,7 @@ useEffect(()=>{
             </View>
             <ScrollView bounces ={false}>
                 <View style ={styles.home}>
+                    {/* <Text style = {styles.text1}>{data.current_state}!!</Text> */}
                     <Text style = {styles.text1}>Choose your role!!!</Text>
                     <View style ={styles.view1}>
                         <View  style ={styles.view8}>
@@ -278,7 +295,7 @@ const styles = StyleSheet.create({
     
     button1:{
       height:40,
-      width:150,
+      width:250,
       backgroundColor:colors.black,
       borderRadius:20,
       alignItems:"center",

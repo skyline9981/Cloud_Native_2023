@@ -84,17 +84,6 @@ const DestinationScreen = ({navigation}) => {
                     }})
 
                     setDestination(true)
-
-                    // axios.get(URL+'/ttt')
-                    //     .then(response => {
-                    //         console.log(response.data);
-                    //         if (response.data.current_state1 === "true") console.log("true");
-                    //         else console.log("false");
-                    //     })
-                    //     .catch(error => {
-                    //         console.error(error);
-                    //     });
-
                     
                     axios.post(URL + '/cus_start_point', {
                         address: details.formatted_address,
@@ -108,14 +97,6 @@ const DestinationScreen = ({navigation}) => {
                             console.error(error);
                         });
 
-                        // axios.get(URL + '/')
-                        //     .then(response => {
-                        //         console.log(response.data);
-                        //     })
-                        //     .catch(error => {
-                        //         console.log("test");
-                        //         console.error(error);
-                        //     });
                 }}
 
             />
