@@ -148,8 +148,8 @@ const DestinationScreen = ({navigation}) => {
                 placeholder ="Going to..."
                 listViewDisplayed = "auto"
                 debounce ={400}
-                //currentLocation ={true}
-                //currentLocationLabel='Current location'
+                currentLocation ={true}
+                currentLocationLabel='Current location'
                 ref ={textInput2}
                 minLength ={2}
                 enablePoweredByContainer = {false}
@@ -168,6 +168,17 @@ const DestinationScreen = ({navigation}) => {
                         address:details.formatted_address,
                         name:details.name
                     }})
+
+                    axios.post(URL + '/driver_way_point', {
+                        address: details.formatted_address,
+                        latitude: details.geometry.location.lat,
+                        longitude: details.geometry.location.lng })
+                        .then(response => {
+                            console.log(response.data);
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
 
                     navigation.navigate("WpRequestScreen",{state:0})
                 }}

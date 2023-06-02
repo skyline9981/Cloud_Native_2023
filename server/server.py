@@ -18,6 +18,7 @@ cus_latitude_end = "no enter"
 cus_longitude_end = "no enter"
 driver_start_point = "not enter"
 driver_destination_point = "not enter"
+driver_way_point = "not enter"
 driver_latitude = "no enter"
 driver_longitude = "no enter"
 
@@ -105,6 +106,22 @@ def get_position4():
         latitude = data.get('latitude')
         longitude = data.get('longitude')
         return jsonify({'address': destination_point,
+                        'latitude':latitude,
+                        'longitude':longitude})
+
+@app.route('/driver_way_point', methods=["GET","POST"])
+def get_position5():
+    global driver_way_point
+    if request.method == "GET":
+        return jsonify({'address': driver_way_point})
+
+    elif request.method == "POST":
+        print("enter way point")
+        data = request.get_json()
+        way_point = data.get('address')
+        latitude = data.get('latitude')
+        longitude = data.get('longitude')
+        return jsonify({'address': way_point,
                         'latitude':latitude,
                         'longitude':longitude})
 
