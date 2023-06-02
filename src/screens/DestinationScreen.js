@@ -61,8 +61,8 @@ const DestinationScreen = ({navigation}) => {
                 placeholder ="From..."
                 listViewDisplayed = "auto"
                 debounce ={400}
-                //currentLocation ={true}
-                //currentLocationLabel='Current location'
+                currentLocation ={true}
+                currentLocationLabel='Current location'
                 ref ={textInput1}
                 minLength ={2}
                 enablePoweredByContainer = {false}
@@ -85,15 +85,15 @@ const DestinationScreen = ({navigation}) => {
 
                     setDestination(true)
 
-                    axios.get(URL+'/ttt')
-                        .then(response => {
-                            console.log(response.data);
-                            // if (response.data.current_state1 === "true") ;
-                            // else console.log("false");
-                        })
-                        .catch(error => {
-                            console.error(error);
-                        });
+                    // axios.get(URL+'/ttt')
+                    //     .then(response => {
+                    //         console.log(response.data);
+                    //         if (response.data.current_state1 === "true") console.log("true");
+                    //         else console.log("false");
+                    //     })
+                    //     .catch(error => {
+                    //         console.error(error);
+                    //     });
 
                     
                     axios.post(URL + '/cus_start_point', {
@@ -104,8 +104,18 @@ const DestinationScreen = ({navigation}) => {
                             console.log(response.data);
                         })
                         .catch(error => {
+                            console.log("test");
                             console.error(error);
                         });
+
+                        // axios.get(URL + '/')
+                        //     .then(response => {
+                        //         console.log(response.data);
+                        //     })
+                        //     .catch(error => {
+                        //         console.log("test");
+                        //         console.error(error);
+                        //     });
                 }}
 
             />
@@ -116,8 +126,8 @@ const DestinationScreen = ({navigation}) => {
                 placeholder ="Going to..."
                 listViewDisplayed = "auto"
                 debounce ={400}
-                // ={true}
-                //currentLocationLabel='Current location'
+                currentLocation ={true}
+                currentLocationLabel='Current location'
                 ref ={textInput2}
                 minLength ={2}
                 enablePoweredByContainer = {false}
