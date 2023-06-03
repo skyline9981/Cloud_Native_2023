@@ -3,14 +3,12 @@
 
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine,  Engine, text
+from sqlalchemy import create_engine, Engine, text
 from flask_cors import CORS
 
-# db = SQLAlchemy()
 # Initializing flask app
 app = Flask(__name__)
 
-# db.init_app(app)
 CORS(app)
 engine:Engine = create_engine("postgresql://skyline:skyline@127.0.0.1:5432/uber")
 
