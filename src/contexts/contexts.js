@@ -1,10 +1,24 @@
 import React,{createContext,useReducer} from 'react';
-import {OriginReducer,DestinationReducer,WaypointReducer} from  '../reducers/reducers'
+import {OriginReducer,DestinationReducer,WaypointReducer,UserReducer} from  '../reducers/reducers'
 
 export const OriginContext = createContext()
 export const DestinationContext = createContext()
 export const WaypointContext = createContext()
+export const UserNameAndTime = createContext()
 
+export const UserNameAndTimeContextProvider = (props)=>{
+    const[User,dispatchUser] =useReducer(UserReducer,{
+                name:"",
+                time:""
+    })
+    return(
+        <UserNameAndTime.Provider
+                value ={{User,dispatchUser}}
+            >
+            {props.children}
+        </UserNameAndTime.Provider>
+    )
+}
 export const OriginContextProvider = (props)=>{
     const[origin,dispatchOrigin] =useReducer(OriginReducer,{
                 latitude:null,

@@ -1,24 +1,27 @@
 import React,{useState,useContext,useEffect,useRef,useMemo,useCallback} from 'react'
-import { StyleSheet, Image,View,Text,Dimensions,TouchableOpacity} from 'react-native'
+import { StyleSheet, Image,View,Text,Dimensions,TouchableOpacity,TextInput} from 'react-native'
 import BottomSheet, { BottomSheetFlatList,BottomSheetSectionList } from '@gorhom/bottom-sheet';
 import { Avatar,Icon} from 'react-native-elements';
 import MapComponent from '../components/MapComponent'
 import { colors,parameters } from '../global/styles'
 import { rideData } from '../global/data';
-import { OriginContext,DestinationContext } from '../contexts/contexts';
+import { OriginContext,DestinationContext,UserNameAndTime } from '../contexts/contexts';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 
 export default function RequestScreen({navigation,route}) {
+    const [text, onChangeText] = React.useState('');
+    const [number, onChangeNumber] = React.useState('');
     const {origin,dispatchOrigin} = useContext(OriginContext)
     const [userOrigin,setUserOrigin] = useState({latitude:origin.latitude,
                                                   longitude:origin.longitude})
     const {destination,dispatchDestination} = useContext(DestinationContext)
     const [userDestination,setUserDestination] = useState({latitude:destination.latitude,
                                                 longitude:destination.longitude}) 
-                                                
+    const {User,dispatchUser} = useContext(UserNameAndTime)
+
    const bottomsheet1 =useRef(1)  ;  
    
    const snapPoints1 = useMemo(()=>['30%'],[])
@@ -33,6 +36,7 @@ useEffect(()=>{
 
 
 const renderFlatListItems = useCallback(({item})=>(
+    
     <View>
           <View style ={styles.view10}>
             <View style ={styles.view11}>
@@ -71,12 +75,41 @@ const renderFlatListItems = useCallback(({item})=>(
                             size ={30}
                             source = {require('../../assets/blankProfilePic.jpg')}
                             />
-                          <Text style ={{marginLeft:5}}>For Someone</Text>
                           <Icon 
                               type ="material-community"
                               name ="chevron-down"
                               color ={colors.grey1}
                               size ={26}
+                            />
+                            <Text style ={styles.text1}>Your name:</Text>
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={(text)=>{
+                                    onChangeText(text);
+                                    dispatchUser({type:"ADD_USER",payload:{
+                                        name:text,
+                                        time:User.time
+                                    }})
+                                    console.log(User.time);
+                                    
+                                }}
+                                value={text}
+                            />
+                            <Text style ={styles.text1}>Time:</Text>
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={(number)=>{
+                                    onChangeNumber(number);
+                                    dispatchUser({type:"ADD_USER",payload:{
+                                        name:User.name,
+                                        time:number
+                                    }})
+                                    console.log(User.name);
+                                    
+                                }}
+                                value={number}
+                                placeholder="input time"
+                                keyboardType="numeric"
                             />
                     </View>
                 </TouchableOpacity>

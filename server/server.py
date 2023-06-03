@@ -8,8 +8,6 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-current_state1 = "true"
-current_state = "not started"
 cus_start_point = "no enter"
 cus_destination_point = "no enter"
 cus_latitude_start = "no enter"
@@ -26,60 +24,44 @@ driver_longitude_end = "no enter"
 driver_latitude_way = "no enter"
 driver_longitude_way = "no enter"
 
+name = ""
+time = ""
+origin_address = ""
+origin_latitude = ""
+origin_longitude = ""
+destination_address = ""
+destination_latitude = "" 
+destination_longitude = ""
+
 @app.route('/', methods=["GET","POST"])
-def get_data():
-    global current_state
-    if request.method == "GET":
-        return jsonify({'current_state': current_state})
-
-    elif request.method == "POST":
-        print("press button")
-        data = request.get_json()
-        current_state = data.get('current_state')
-        return jsonify({'current_state': current_state})
-
-@app.route('/ttt', methods=["GET"])
-def get_data2():
-    global current_state1
-    if request.method == "GET":
-        return jsonify({'current_state1': current_state1})
-
-
-@app.route('/cus_start_point', methods=["GET","POST"])
 def get_position():
-    global cus_latitude_start, cus_start_point, cus_longitude_start
+    global name, time, origin_address, origin_latitude, origin_longitude, destination_address, destination_latitude, destination_longitude
     if request.method == "GET":
-        return jsonify({'address': cus_start_point,
-                        'latitude':cus_latitude_start,
-                        'longitude':cus_longitude_start})
-
-    elif request.method == "POST":
-        print("enter start point")
-        data = request.get_json()
-        cus_start_point = data.get('address')
-        cus_latitude_start = data.get('latitude')
-        cus_longitude_start = data.get('longitude')
-        return jsonify({'address': cus_start_point,
-                        'latitude':cus_latitude_start,
-                        'longitude':cus_longitude_start})
-
-@app.route('/cus_destination_point', methods=["GET","POST"])
-def get_position2():
-    global cus_destination_point, cus_latitude_end, cus_longitude_end
-    if request.method == "GET":
-        return jsonify({'address': cus_destination_point,
-                        'latitude':cus_latitude_end,
-                        'longitude':cus_longitude_end})
+        return jsonify({'no data': "no data"})
 
     elif request.method == "POST":
         print("enter destination point")
         data = request.get_json()
-        cus_destination_point = data.get('address')
-        cus_latitude_end = data.get('latitude')
-        cus_longitude_end = data.get('longitude')
-        return jsonify({'address': cus_destination_point,
-                        'latitude':cus_latitude_end,
-                        'longitude':cus_longitude_end})
+        name = data.get('name')
+        time = data.get('time')
+        origin_address = data.get('origin_address')
+        origin_latitude = data.get('origin_latitude')
+        origin_longitude = data.get('origin_longitude')
+        destination_address = data.get('destination_address')
+        destination_latitude = data.get('destination_latitude')
+        destination_longitude = data.get('destination_longitude')
+        return jsonify({'role': "User",
+                        'name': name,
+                        'time': time,                        
+                        'origin_address': origin_address,
+                        'origin_latitude': origin_latitude,
+                        'origin_longitude': origin_longitude,
+                        'destination_address': destination_address,
+                        'destination_latitude': destination_latitude,
+                        'destination_longitude': destination_longitude,
+                        'waypoints_address': "",
+                        'waypoints_address_latitude':"",
+                        'waypoints_address_longitude':""})
 
 @app.route('/driver_start_point', methods=["GET","POST"])
 def get_position3():
@@ -131,4 +113,4 @@ def get_position5():
 
 # Running app
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", debug = True)
+    app.run(host="0.0.0.0", port=9000, debug = True)

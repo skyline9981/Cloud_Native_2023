@@ -5,7 +5,7 @@ import { Avatar,Icon} from 'react-native-elements';
 import MapComponent from '../components/MapComponent'
 import { colors,parameters } from '../global/styles'
 import { rideData } from '../global/data';
-import { OriginContext,DestinationContext,WaypointContext } from '../contexts/contexts';
+//import { OriginContext,DestinationContext,WaypointContext } from '../contexts/contexts';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;

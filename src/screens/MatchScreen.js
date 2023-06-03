@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar'
-import React,{useState,useRef,useEffect} from 'react'
+import React,{useState,useRef,useEffect,useContext} from 'react'
 import { StyleSheet, Text, View,Dimensions ,ScrollView,Image,FlatList,TouchableOpacity} from 'react-native'
 import { Icon} from 'react-native-elements'
 import MapView, { PROVIDER_GOOGLE,Marker} from 'react-native-maps'; 
 import * as Location from 'expo-location';
+import { OriginContext,DestinationContext,UserNameAndTime } from '../contexts/contexts';
 
 const SCREEN_WIDTH = Dimensions.get('window').width
 import { colors,parameters } from '../global/styles'
@@ -11,8 +12,10 @@ import { filterData,carsAround } from '../global/data'
 import { mapStyle} from "../global/mapStyle"
 
 const HomeScreen = ({navigation}) => {
+const {User,dispatchUser} = useContext(UserNameAndTime)
 
-
+const {origin,dispatchOrigin} = useContext(OriginContext)
+const {destination,dispatchDestination} = useContext(DestinationContext)
 const [latlng,setLatLng] = useState({})
 
 const checkPermission =async()=>{
@@ -50,7 +53,7 @@ const _map = useRef(1);
 useEffect(()=>{
     checkPermission();
     getLocation()
-   // console.log(latlng)
+    console.log(User.name)
 ,[]})
 
 
@@ -93,7 +96,7 @@ useEffect(()=>{
                     <Text style ={styles.text4}>Path</Text>
 
                     <View>
-                <MapView
+                {/* <MapView
                     provider ={PROVIDER_GOOGLE}
                     style = {styles.map}
                     customMapStyle ={mapStyle}
@@ -126,7 +129,7 @@ useEffect(()=>{
                           strokeColor={colors.black}
                         />
                     }
-                </MapView> 
+                </MapView>  */}
             </View>
             </ScrollView>
             <StatusBar style ="light" backgroundColor = "#2058c0" translucent ={true} />

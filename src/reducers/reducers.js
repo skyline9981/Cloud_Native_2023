@@ -12,6 +12,18 @@ export const OriginReducer = (state,action)=>{
                 return state
     }
 }
+export const UserReducer = (state,action)=>{
+    switch(action.type){
+        case 'ADD_USER':
+            return{
+                name:action.payload.name,
+                time:action.payload.time
+            }
+            default:
+                return state
+        }
+    }
+
 
 
 export const DestinationReducer = (state,action)=>{

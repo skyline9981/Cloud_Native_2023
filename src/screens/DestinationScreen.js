@@ -5,7 +5,7 @@ import { Avatar,Icon} from 'react-native-elements';
 import { colors,parameters } from '../global/styles'
 import { GOOGLE_MAPS_APIKEY } from "@env";
 import { URL } from "@env";
-import { OriginContext,DestinationContext } from '../contexts/contexts';
+import { OriginContext,DestinationContext,UserNameAndTime } from '../contexts/contexts';
 import axios from 'axios';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -15,13 +15,15 @@ navigator.geolocation = require('react-native-geolocation-service')
 
 const DestinationScreen = ({navigation}) => {
 
-    const {dispatchOrigin} = useContext(OriginContext)
-    const {dispatchDestination} = useContext(DestinationContext)
+    const {origin,dispatchOrigin} = useContext(OriginContext)
+    const {destination,dispatchDestination} = useContext(DestinationContext)
+
+    const {User,dispatchUser} = useContext(UserNameAndTime)
 
     const textInput1 = useRef(4);
     const textInput2 = useRef(5);
 
-    const[destination,setDestination] = useState(false)
+    const[destinationflag,setDestination] = useState(false)
 
     return (
         <>
@@ -55,7 +57,7 @@ const DestinationScreen = ({navigation}) => {
                     </View>
                 </TouchableOpacity>
             </View>
-            {destination === false &&
+            {destinationflag === false &&
             <GooglePlacesAutocomplete 
                 nearbyPlacesAPI = 'GooglePlacesSearch'
                 placeholder ="From..."
@@ -84,22 +86,10 @@ const DestinationScreen = ({navigation}) => {
                     }})
 
                     setDestination(true)
-                    
-                    axios.post(URL + '/cus_start_point', {
-                        address: details.formatted_address,
-                        latitude: details.geometry.location.lat,
-                        longitude: details.geometry.location.lng})
-                        .then(response => {
-                            console.log(response.data);
-                        })
-                        .catch(error => {
-                            console.log("test");
-                            console.error(error);
-                        });
                 }}
             />
             }
-            {destination === true &&
+            {destinationflag === true &&
             <GooglePlacesAutocomplete 
                 nearbyPlacesAPI = 'GooglePlacesSearch'
                 placeholder ="Going to..."
@@ -126,18 +116,24 @@ const DestinationScreen = ({navigation}) => {
                         name:details.name
                     }})
 
-                    navigation.navigate("RequestScreen", { state: 0 })
-
-                    axios.post(URL + '/cus_destination_point', {
-                        'address': details.formatted_address,
-                        'latitude': details.geometry.location.lat,
-                        'longitude': details.geometry.location.lng})
+                    axios.post(URL + '/', {
+                        name: User.name,
+                        time: User.time,                        
+                        origin_address: origin.address,
+                        origin_latitude: origin.latitude,
+                        origin_longitude: origin.longitude,
+                        destination_address: details.formatted_address,
+                        destination_latitude: details.geometry.location.lat,
+                        destination_longitude: details.geometry.location.lng,
+                    })
                         .then(response => {
                             console.log(response.data);
                         })
                         .catch(error => {
                             console.error(error);
                         });
+
+                    navigation.navigate("MatchScreen", { state: 0 })
                 }}
 
             />
