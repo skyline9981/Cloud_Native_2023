@@ -7,7 +7,10 @@ import { GOOGLE_MAPS_APIKEY } from "@env";
 import { URL } from "@env";
 import { OriginContext,DestinationContext,WaypointContext } from '../contexts/contexts';
 import axios from 'axios';
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;

@@ -16,11 +16,15 @@ cus_latitude_start = "no enter"
 cus_longitude_start = "no enter"
 cus_latitude_end = "no enter"
 cus_longitude_end = "no enter"
-driver_start_point = "not enter"
-driver_destination_point = "not enter"
-driver_way_point = "not enter"
-driver_latitude = "no enter"
-driver_longitude = "no enter"
+driver_start_point = "no enter"
+driver_destination_point = "no enter"
+driver_way_point = "no enter"
+driver_latitude_start = "no enter"
+driver_longitude_start = "no enter"
+driver_latitude_end = "no enter"
+driver_longitude_end = "no enter"
+driver_latitude_way = "no enter"
+driver_longitude_way = "no enter"
 
 @app.route('/', methods=["GET","POST"])
 def get_data():
@@ -79,51 +83,51 @@ def get_position2():
 
 @app.route('/driver_start_point', methods=["GET","POST"])
 def get_position3():
-    global driver_start_point
+    global driver_start_point, driver_latitude_start, driver_longitude_start
     if request.method == "GET":
         return jsonify({'address': driver_start_point})
 
     elif request.method == "POST":
         print("enter start point")
         data = request.get_json()
-        start_point = data.get('address')
-        latitude = data.get('latitude')
-        longitude = data.get('longitude')
-        return jsonify({'address': start_point,
-                        'latitude':latitude,
-                        'longitude':longitude})
+        driver_start_point = data.get('address')
+        driver_latitude_start = data.get('latitude')
+        driver_longitude_start = data.get('longitude')
+        return jsonify({'address': driver_start_point,
+                        'latitude':driver_latitude_start,
+                        'longitude':driver_longitude_start})
 
 @app.route('/driver_destination_point', methods=["GET","POST"])
 def get_position4():
-    global driver_destination_point
+    global driver_destination_point, driver_latitude_end, driver_longitude_end
     if request.method == "GET":
         return jsonify({'address': driver_destination_point})
 
     elif request.method == "POST":
         print("enter destination point")
         data = request.get_json()
-        destination_point = data.get('address')
-        latitude = data.get('latitude')
-        longitude = data.get('longitude')
-        return jsonify({'address': destination_point,
-                        'latitude':latitude,
-                        'longitude':longitude})
+        driver_destination_point = data.get('address')
+        driver_latitude_end = data.get('latitude')
+        driver_longitude_end = data.get('longitude')
+        return jsonify({'address': driver_destination_point,
+                        'latitude':driver_latitude_end,
+                        'longitude':driver_longitude_end})
 
 @app.route('/driver_way_point', methods=["GET","POST"])
 def get_position5():
-    global driver_way_point
+    global driver_way_point, driver_latitude_way, driver_longitude_way
     if request.method == "GET":
         return jsonify({'address': driver_way_point})
 
     elif request.method == "POST":
         print("enter way point")
         data = request.get_json()
-        way_point = data.get('address')
-        latitude = data.get('latitude')
-        longitude = data.get('longitude')
-        return jsonify({'address': way_point,
-                        'latitude':latitude,
-                        'longitude':longitude})
+        driver_way_point = data.get('address')
+        driver_latitude_way = data.get('latitude')
+        driver_longitude_way = data.get('longitude')
+        return jsonify({'address': driver_way_point,
+                        'latitude':driver_latitude_way,
+                        'longitude':driver_longitude_way})
 
 # Running app
 if __name__ == '__main__':
