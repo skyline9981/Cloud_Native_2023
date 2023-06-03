@@ -115,7 +115,7 @@ const DestinationScreen = ({navigation}) => {
                         address:details.formatted_address,
                         name:details.name
                     }})
-
+                    console.log(URL);
                     axios.post(URL + '/cus_start_point', {
                         name: User.name,
                         time: User.time,                        
