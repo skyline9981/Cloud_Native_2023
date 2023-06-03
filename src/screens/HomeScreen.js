@@ -45,28 +45,28 @@ const getLocation = async()=>{
     }
 }
 
-// const [data, setdata] = useState({
-//     current_state: ""
-// });
+const [data, setdata] = useState({
+    current_state: ""
+});
 
-// const fetchData = async () => {
-//     try {
-//         const response = await axios.get(URL + '/');
-//         setdata({
-//             current_state: response.data.current_state,
-//         });
-//         console.log(response.data.current_state);
-//     } catch (error) {
-//         console.log('Fail:', error);
-//     }
-// };
+const fetchData = async () => {
+    try {
+        const response = await axios.get(URL + '/');
+        setdata({
+            current_state: response.data.current_state,
+        });
+        console.log(response.data.current_state);
+    } catch (error) {
+        console.log('Fail:', error);
+    }
+};
 
 const _map = useRef(1);
 
 useEffect(()=>{
     checkPermission();
     getLocation();
-    // fetchData()
+    fetchData()
    // console.log(latlng)
 },[])
 
@@ -84,18 +84,19 @@ useEffect(()=>{
             </View>
             <ScrollView bounces ={false}>
                 <View style ={styles.home}>
-                    {/* <Text style = {styles.text1}>{data.current_state}!!</Text> */}
-                    <Text style = {styles.text1}>Choose your role!!!</Text>
+                    <Text style = {styles.text1}>{data.current_state}!!</Text>
+                    {/* <Text style = {styles.text1}>Choose your role!!!</Text> */}
                     <View style ={styles.view1}>
                         <View  style ={styles.view8}>
                             <TouchableOpacity onPress={() => {
                                 navigation.navigate("RequestScreen", { state: 0 })
-                                //console.log('test');
+                                console.log('test');
                                 axios.post( URL +'/', { current_state: 'cus login' })
                                     .then(response => {
                                         console.log(response.data);
                                     })
                                     .catch(error => {
+                                        console.log("test");
                                         console.error(error);
                                     });
                             }}>

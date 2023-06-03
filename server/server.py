@@ -2,11 +2,17 @@
 # -*- coding: utf-8 -*-
 
 from flask import Flask, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine,  Engine, text
 from flask_cors import CORS
 
+# db = SQLAlchemy()
 # Initializing flask app
 app = Flask(__name__)
+
+# db.init_app(app)
 CORS(app)
+engine:Engine = create_engine("postgresql://skyline:skyline@127.0.0.1:5432/uber")
 
 current_state1 = "true"
 current_state = "not started"
@@ -30,7 +36,19 @@ driver_longitude_way = "no enter"
 def get_data():
     global current_state
     if request.method == "GET":
-        return jsonify({'current_state': current_state})
+        sql_cmd = """
+        select name
+        from cus_drive_data
+        """
+        conn = engine.connect()
+        query_data = conn.execute(text(sql_cmd)).fetchall()
+        
+        result = ""
+        for row in query_data:
+            print(row)
+            result += row[0] + ' '
+            
+        return jsonify({'current_state': result})
 
     elif request.method == "POST":
         print("press button")

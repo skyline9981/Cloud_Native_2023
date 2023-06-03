@@ -90,6 +90,7 @@ const DestinationScreen = ({navigation}) => {
                         latitude: details.geometry.location.lat,
                         longitude: details.geometry.location.lng})
                         .then(response => {
+                            console.log("test");
                             console.log(response.data);
                         })
                         .catch(error => {
