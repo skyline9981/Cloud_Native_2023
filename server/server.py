@@ -2,11 +2,23 @@
 # -*- coding: utf-8 -*-
 
 from flask import Flask, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine, Engine, text
 from flask_cors import CORS
+import os
+import dotenv
+
+dotenv.load_dotenv()
 
 # Initializing flask app
 app = Flask(__name__)
+
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+DB_NAME = os.getenv('DB_NAME')
+DB_PORT = os.getenv('DB_PORT')
 CORS(app)
+engine:Engine = create_engine(f"postgresql://{DB_USER}:{DB_PASSWORD}@127.0.0.1:{DB_PORT}/{DB_NAME}")
 
 cus_start_point = "no enter"
 cus_destination_point = "no enter"
@@ -34,6 +46,37 @@ destination_latitude = ""
 destination_longitude = ""
 
 @app.route('/', methods=["GET","POST"])
+def get_data():
+    global current_state
+    if request.method == "GET":
+        sql_cmd = """
+        select name
+        from cus_drive_data
+        """
+        conn = engine.connect()
+        query_data = conn.execute(text(sql_cmd)).fetchall()
+        
+        result = ""
+        for row in query_data:
+            print(row)
+            result += row[0] + ' '
+            
+        return jsonify({'current_state': result})
+
+    elif request.method == "POST":
+        print("press button")
+        data = request.get_json()
+        current_state = data.get('current_state')
+        return jsonify({'current_state': current_state})
+
+@app.route('/ttt', methods=["GET"])
+def get_data2():
+    global current_state1
+    if request.method == "GET":
+        return jsonify({'current_state1': current_state1})
+
+
+@app.route('/cus_start_point', methods=["GET","POST"])
 def get_position():
     global name, time, origin_address, origin_latitude, origin_longitude, destination_address, destination_latitude, destination_longitude
     if request.method == "GET":
