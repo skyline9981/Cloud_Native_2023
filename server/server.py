@@ -80,10 +80,21 @@ def get_data2():
 def get_position():
     global name, time, origin_address, origin_latitude, origin_longitude, destination_address, destination_latitude, destination_longitude
     if request.method == "GET":
-        return jsonify({'no data': "no data"})
+        return jsonify({'role': "User",
+                        'name': name,
+                        'time': time,                        
+                        'origin_address': origin_address,
+                        'origin_latitude': origin_latitude,
+                        'origin_longitude': origin_longitude,
+                        'destination_address': destination_address,
+                        'destination_latitude': destination_latitude,
+                        'destination_longitude': destination_longitude,
+                        'waypoints_address': "",
+                        'waypoints_address_latitude':"",
+                        'waypoints_address_longitude':""})
 
     elif request.method == "POST":
-        print("enter destination point")
+        print("enter user destination point")
         data = request.get_json()
         name = data.get('name')
         time = data.get('time')
@@ -156,4 +167,4 @@ def get_position5():
 
 # Running app
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=9000, debug = True)
+    app.run(host="0.0.0.0", debug = True)
