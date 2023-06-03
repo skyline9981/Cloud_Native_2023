@@ -85,7 +85,7 @@ const DestinationScreen = ({navigation}) => {
                         name:details.name
                     }})
 
-                    
+                    setDestination(true)
                 }}
 
             />

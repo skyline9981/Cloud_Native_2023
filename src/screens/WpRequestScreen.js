@@ -12,7 +12,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 
 export default function RequestScreen({navigation,route}) {
-    const [text, onChangeText] = React.useState('Your name    ');
+    const [text, onChangeText] = React.useState('');
     const [number, onChangeNumber] = React.useState('');
 
 
@@ -81,6 +81,7 @@ const renderFlatListItems = useCallback(({item})=>(
                             size ={30}
                             source = {require('../../assets/blankProfilePic.jpg')}
                             />
+                            <Text style ={styles.text1}>Your name:</Text>
                             <TextInput
                                 style={styles.input}
                                 onChangeText={(text)=>{
@@ -94,6 +95,7 @@ const renderFlatListItems = useCallback(({item})=>(
                                 }}
                                 value={text}
                                 />
+                            <Text style ={styles.text1}>Time:</Text>
                             <TextInput
                                 style={styles.input}
                                 onChangeText={(number)=>{
