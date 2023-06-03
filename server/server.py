@@ -2,11 +2,16 @@
 # -*- coding: utf-8 -*-
 
 from flask import Flask, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine, Engine, text
+
+from sqlalchemy import create_engine
+from sqlalchemy.engine import Engine
 from flask_cors import CORS
 import os
 import dotenv
+
+from sqlalchemy import create_engine, Column, String, Integer, text
+from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import sessionmaker
 
 dotenv.load_dotenv()
 
@@ -19,6 +24,33 @@ DB_NAME = os.getenv('DB_NAME')
 DB_PORT = os.getenv('DB_PORT')
 CORS(app)
 engine:Engine = create_engine(f"postgresql://{DB_USER}:{DB_PASSWORD}@127.0.0.1:{DB_PORT}/{DB_NAME}")
+
+# Define the SQLAlchemy base class
+Base = declarative_base()
+
+# Define the table class for your data
+class CurDriveData(Base):
+    __tablename__ = 'cus_drive_data'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String)
+    type = Column(String)
+    time = Column(String)
+    origin_address = Column(String)
+    origin_latitude = Column(String)
+    origin_longitude = Column(String)
+    destination_address = Column(String)
+    destination_latitude = Column(String)
+    destination_longitude = Column(String)
+    waypoints_address = Column(String)
+    waypoints_address_latitude = Column(String)
+    waypoints_address_longitude = Column(String) 
+
+# Create the table if it doesn't exist
+Base.metadata.create_all(engine)
+
+# Create a session to interact with the database
+Session = sessionmaker(bind=engine)
 
 cus_start_point = "no enter"
 cus_destination_point = "no enter"
@@ -55,7 +87,7 @@ def get_data():
         """
         conn = engine.connect()
         query_data = conn.execute(text(sql_cmd)).fetchall()
-        
+        print("aaa")
         result = ""
         for row in query_data:
             print(row)
@@ -95,15 +127,22 @@ def get_position():
 
     elif request.method == "POST":
         print("enter user destination point")
-        data = request.get_json()
-        name = data.get('name')
-        time = data.get('time')
-        origin_address = data.get('origin_address')
-        origin_latitude = data.get('origin_latitude')
-        origin_longitude = data.get('origin_longitude')
-        destination_address = data.get('destination_address')
-        destination_latitude = data.get('destination_latitude')
-        destination_longitude = data.get('destination_longitude')
+        req = request.get_json()
+
+        hard_code = {
+            "type": "customer",
+            "waypoints_address" : '',
+            "waypoints_address_latitude" : '',
+            "waypoints_address_longitude" : '',
+        }
+        
+        data = {**req, **hard_code}
+        
+        with Session() as session:
+            new_record = CurDriveData(**data)
+            session.add(new_record)
+            session.commit()
+        
         return jsonify({'role': "User",
                         'name': name,
                         'time': time,                        

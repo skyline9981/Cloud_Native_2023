@@ -51,13 +51,13 @@ const [data, setdata] = useState({
 
 const fetchData = async () => {
     try {
-        const response = await axios.get(URL + '/');
+        const response = await axios.get(URL);
         setdata({
             current_state: response.data.current_state,
         });
         console.log(response.data.current_state);
     } catch (error) {
-        console.log('Fail:', error);
+        console.error('Fail:', error);
     }
 };
 
