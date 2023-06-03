@@ -5,7 +5,7 @@ import { Avatar,Icon} from 'react-native-elements';
 import MapComponent from '../components/MapComponent2'
 import { colors,parameters } from '../global/styles'
 import { rideData } from '../global/data';
-//import { OriginContext,DestinationContext,WaypointContext } from '../contexts/contexts';
+import { OriginContext,DestinationContext,WaypointContext,UserNameAndTime } from '../contexts/contexts';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -27,6 +27,9 @@ export default function RequestScreen({navigation,route}) {
                                                 longitude:destination.longitude}) 
     const bottomsheet1 =useRef(1)  ;  
     
+    const {User,dispatchUser} = useContext(UserNameAndTime)
+
+
     const snapPoints1 = useMemo(()=>['30%'],[])
     const handleSheetChange1  = useCallback((index)=>{},[])
 
@@ -80,16 +83,32 @@ const renderFlatListItems = useCallback(({item})=>(
                             />
                             <TextInput
                                 style={styles.input}
-                                onChangeText={onChangeText}
+                                onChangeText={(text)=>{
+                                    onChangeText(text);
+                                    dispatchUser({type:"ADD_USER",payload:{
+                                        name:text,
+                                        time:User.time
+                                    }})
+                                    console.log(User.time);
+                                    
+                                }}
                                 value={text}
-                            />
+                                />
                             <TextInput
                                 style={styles.input}
-                                onChangeText={onChangeNumber}
+                                onChangeText={(number)=>{
+                                    onChangeNumber(number);
+                                    dispatchUser({type:"ADD_USER",payload:{
+                                        name:User.name,
+                                        time:number
+                                    }})
+                                    console.log(User.name);
+                                    
+                                }}
                                 value={number}
                                 placeholder="input time"
                                 keyboardType="numeric"
-                            />
+                                />
                             
                     </View>
                 <View style ={styles.view4}>

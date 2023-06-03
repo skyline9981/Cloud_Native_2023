@@ -116,7 +116,7 @@ const DestinationScreen = ({navigation}) => {
                         name:details.name
                     }})
 
-                    axios.post(URL + '/cus_start_point', {
+                    axios.post(URL + '/', {
                         name: User.name,
                         time: User.time,                        
                         origin_address: origin.address,
@@ -127,7 +127,6 @@ const DestinationScreen = ({navigation}) => {
                         destination_longitude: details.geometry.location.lng,
                     })
                         .then(response => {
-                            console.log("test");
                             console.log(response.data);
                         })
                         .catch(error => {

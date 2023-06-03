@@ -5,7 +5,7 @@ import { Avatar,Icon} from 'react-native-elements';
 import { colors,parameters } from '../global/styles'
 import { GOOGLE_MAPS_APIKEY } from "@env";
 import { URL } from "@env";
-//import { OriginContext,DestinationContext,WaypointContext } from '../contexts/contexts';
+import { OriginContext,DestinationContext,WaypointContext,UserNameAndTime } from '../contexts/contexts';
 import axios from 'axios';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -14,14 +14,16 @@ navigator.geolocation = require('react-native-geolocation-service')
 
 const DestinationScreen = ({navigation}) => {
 
-    const {dispatchOrigin} = useContext(OriginContext)
-    const {dispatchDestination} = useContext(DestinationContext)
+    const {origin,dispatchOrigin} = useContext(OriginContext)
+    const {destination,dispatchDestination} = useContext(DestinationContext)
     const {dispatchWaypoint} = useContext(WaypointContext)
+    const {User,dispatchUser} = useContext(UserNameAndTime)
+
 
     const textInput1 = useRef(4);
     const textInput2 = useRef(5);
 
-    const[destination,setDestination] = useState(false)
+    const[destinationflag,setDestination] = useState(false)
     const[waypoints,setwaypoints] = useState(false)
     return (
         <>
@@ -55,7 +57,7 @@ const DestinationScreen = ({navigation}) => {
                     </View>
                 </TouchableOpacity>
             </View>
-            {destination === false &&
+            {destinationflag === false &&
             <GooglePlacesAutocomplete 
                 nearbyPlacesAPI = 'GooglePlacesSearch'
                 placeholder ="From..."
@@ -83,23 +85,12 @@ const DestinationScreen = ({navigation}) => {
                         name:details.name
                     }})
 
-                    setDestination(true)
-                    axios.post(URL + '/driver_start_point', {
-                        address: details.formatted_address,
-                        latitude: details.geometry.location.lat,
-                        longitude: details.geometry.location.lng})
-                        .then(response => {
-                            console.log("test");
-                            console.log(response.data);
-                        })
-                        .catch(error => {
-                            console.error(error);
-                        });
+                    
                 }}
 
             />
             }
-            {destination === true && waypoints===false &&
+            {destinationflag === true && waypoints===false &&
             <GooglePlacesAutocomplete 
                 nearbyPlacesAPI = 'GooglePlacesSearch'
                 placeholder ="Going to..."
@@ -127,18 +118,7 @@ const DestinationScreen = ({navigation}) => {
                     }})
                     setwaypoints(true)
 
-                    axios.post(URL + '/driver_destination_point', {
-                        address: details.formatted_address,
-                        latitude: details.geometry.location.lat,
-                        longitude: details.geometry.location.lng })
-                        .then(response => {
-                            console.log("test");
-                            console.log(response.data);
-                        })
-                        .catch(error => {
-                            console.error(error);
-                        });
-                }}
+                    }}
 
             />
             }
@@ -169,19 +149,27 @@ const DestinationScreen = ({navigation}) => {
                         name:details.name
                     }})
 
-                    axios.post(URL + '/driver_way_point', {
-                        address: details.formatted_address,
-                        latitude: details.geometry.location.lat,
-                        longitude: details.geometry.location.lng })
+                    axios.post(URL + '/DRIVER', {
+                        name: User.name,
+                        time: User.time,                        
+                        origin_address: origin.address,
+                        origin_latitude: origin.latitude,
+                        origin_longitude: origin.longitude,
+                        destination_address: destination.formatted_address,
+                        destination_latitude: destination.latitude,
+                        destination_longitude: destination.longitude,
+                        waypoint_address: details.formatted_address,
+                        waypoint_latitude: details.geometry.location.lat,
+                        waypoint_longitude: details.geometry.location.lng
+                    })
                         .then(response => {
-                            console.log("test");
                             console.log(response.data);
                         })
                         .catch(error => {
                             console.error(error);
                         });
 
-                    navigation.navigate("WpRequestScreen",{state:0})
+                    navigation.navigate("MatchScreen",{state:0})
                 }}
 
             />
