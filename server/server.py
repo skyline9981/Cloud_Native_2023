@@ -5,12 +5,20 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine, Engine, text
 from flask_cors import CORS
+import os
+import dotenv
+
+dotenv.load_dotenv()
 
 # Initializing flask app
 app = Flask(__name__)
 
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+DB_NAME = os.getenv('DB_NAME')
+DB_PORT = os.getenv('DB_PORT')
 CORS(app)
-engine:Engine = create_engine("postgresql://skyline:skyline@127.0.0.1:5432/uber")
+engine:Engine = create_engine(f"postgresql://{DB_USER}:{DB_PASSWORD}@127.0.0.1:{DB_PORT}/{DB_NAME}")
 
 current_state1 = "true"
 current_state = "not started"
