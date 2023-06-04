@@ -109,7 +109,7 @@ const renderFlatListItems = useCallback(({item})=>(
                                 }}
                                 value={number}
                                 placeholder="input time"
-                                keyboardType="numeric"
+                                // keyboardType="numeric"
                                 />
                             
                     </View>

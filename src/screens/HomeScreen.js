@@ -85,7 +85,7 @@ useEffect(()=>{
             </View>
             <ScrollView bounces ={false}>
                 <View style ={styles.home}>
-                    <Text style = {styles.text1}>{data.current_state}!!</Text>
+                    <Text style = {styles.text1}>Choose your role !!!</Text>
                     {/* <Text style = {styles.text1}>Choose your role!!!</Text> */}
                     <View style ={styles.view1}>
                         <View  style ={styles.view8}>

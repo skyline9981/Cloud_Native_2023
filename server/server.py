@@ -23,7 +23,7 @@ DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_NAME = os.getenv('DB_NAME')
 DB_PORT = os.getenv('DB_PORT')
 CORS(app)
-engine:Engine = create_engine(f"postgresql://{DB_USER}:{DB_PASSWORD}@127.0.0.1:{DB_PORT}/{DB_NAME}")
+engine:Engine = create_engine(f"postgresql://{DB_USER}:{DB_PASSWORD}@127.0.0.1:{DB_PORT}/{DB_NAME}", pool_size=30, pool_timeout=60)
 
 # Define the SQLAlchemy base class
 Base = declarative_base()
@@ -104,8 +104,7 @@ def get_data():
         print("aaa")
         result = ""
         for row in query_data:
-            print(row)
-            result += row[0] + ' '
+            result = row[0]
             
         return jsonify({'current_state': result})
 

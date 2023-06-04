@@ -20,14 +20,10 @@ const {User,dispatchUser} = useContext(UserNameAndTime)
 const {origin,dispatchOrigin} = useContext(OriginContext)
 const {destination,dispatchDestination} = useContext(DestinationContext)
 const [latlng,setLatLng] = useState({})
-const [DriverOrigin,setUserOrigin] = useState({latitude:origin.latitude,
-                longitude:origin.longitude})
-const [DriverDestination,setUserDestination] = useState({latitude:destination.latitude,
-                longitude:destination.longitude}) 
-const [DriverWaypoint,setUserWaypoint] = useState({latitude:destination.latitude,
-                longitude:destination.longitude}) 
-const [CusOrigin,setCusOrigin] = useState({latitude:destination.latitude,
-                longitude:destination.longitude}) 
+const [DriverOrigin,setUserOrigin] = useState({})
+const [DriverDestination,setUserDestination] = useState({}) 
+const [DriverWaypoint,setUserWaypoint] = useState({}) 
+const [CusOrigin,setCusOrigin] = useState({}) 
 
 
 
@@ -60,111 +56,249 @@ const getLocation = async()=>{
 
     }
 }
-
-const [driverdata,setdriverdata] = useState({
-    name: "",
-    time: "",                        
-    origin_address: "",
-    origin_latitude: "",
-    origin_longitude: "",
-    destination_address: "",
-    destination_latitude: "",
-    destination_longitude: "",
-    waypoints_address: "",
-    waypoints_address_latitude:"",
-    waypoints_address_longitude:""
+const [driverdataName,setdriverdataName] = useState({
+    name:""
 })
-const [cusdata,setcusdata] = useState({
-    name: "",
-    time: "",                        
-    origin_address: "",
-    origin_latitude: "",
-    origin_longitude: "",
-    destination_address: "",
-    destination_latitude: "",
-    destination_longitude: "",
-    waypoints_address: "",
-    waypoints_address_latitude:"",
-    waypoints_address_longitude:""
+const [driverdataTime,setdriverdataTime] = useState({
+    time:""
+})
+const [driverdataOrigin_address,setdriverdataOrigin_address] = useState({
+    origin_address:""
+})
+const [driverdataOrigin_latitude,setdriverdataOrigin_latitude] = useState({
+    origin_latitude:24.820525
+})
+const [driverdataOrigin_longitude,setdriverdataOrigin_longitude] = useState({
+    origin_longitude:121.0279874
+})
+const [driverdataDestination_address,setdriverdataDestination_address] = useState({
+    destination_address:""
+})
+
+const [driverdataDestination_latitude,setdriverdataDestination_latitude] = useState({
+    destination_latitude:25.1197546
+})
+
+const [driverdataDestination_longitude,setdriverdataDestination_longitude] = useState({
+    destination_longitude:121.5201492
+})
+const [driverdataWaypoints_address,setdriverdataWaypoints_address]= useState({
+    waypoints_address:""
+})
+const [driverdataWaypoints_address_latitude,setdriverdataWaypoints_address_latitude]= useState({
+    waypoints_address_latitude:25.0109536
+})
+const [driverdataWaypoints_address_longitude,setdriverdataWaypoints_address_longitude]= useState({
+    waypoints_address_longitude:121.2173832
+})
+// const [driverdataOrigin_laatitude,setdriverdaataOrigin_latitude] = useState({
+//     name: "",
+//     time: "",                        
+//     origin_address: "",
+//     origin_latitude: "",
+//     origin_longitude: "",
+//     destination_address: "",
+//     destination_latitude: "",
+//     destination_longitude: "",
+//     waypoints_address: "",
+//     waypoints_address_latitude:"",
+//     waypoints_address_longitude:""
+// })
+
+// const [cusdata,setcusdata] = useState({
+//     name: "",
+//     time: "",                        
+//     origin_address: "",
+//     origin_latitude: "",
+//     origin_longitude: "",
+//     destination_address: "",
+//     destination_latitude: "",
+//     destination_longitude: "",
+//     waypoints_address: "",
+//     waypoints_address_latitude:"",
+//     waypoints_address_longitude:""
+// })
+
+const [cusdataName, setcusdataName] = useState({
+    name: "" 
+})
+const [cusdataTime, setcusdataTime] = useState({
+    time: "" 
+    })
+const [cusdataOrigin_address, setcusdataOrigin_address] = useState({ 
+    origin_address: "" 
+})
+const [cusdataOrigin_latitude, setcusdataOrigin_latitude] = useState({ 
+    origin_latitude: 25.0329636 
+})
+const [cusdataOrigin_longitude, setcusdataOrigin_longitude] = useState({ 
+    origin_longitude: 121.5654268 
+})
+const [cusdataDestination_address, setcusdataDestination_address] = useState({ 
+    destination_address: "" 
+})
+const [cusdataDestination_latitude, setcusdataDestination_latitude] = useState({ 
+    destination_latitude: 22.9998999
+})
+const [cusdataDestination_longitude, setcusdataDestination_longitude] = useState({ 
+    destination_longitude: 120.2268758
+})
+const [cusdataWaypoints_address, setcusdataWaypoints_address] = useState({ 
+    waypoints_address: "" 
+})
+const [cusdataWaypoints_latitude, setcusdataWaypoints_latitude] = useState({ 
+    waypoints_address_latitude: "" 
+})
+const [cusdataWaypoints_longitude, setcusdataWaypoints_longitude] = useState({ 
+    waypoints_address_longitude: "" 
 })
 
 const fetchDriverData = async () => {
     try {
         const response = await axios.get(URL +'/driver');
-        setdriverdata({
-            name: response.data.name,
-            time: response.data.time,
-            origin_address: response.data.origin_address,
-            origin_latitude: response.data.origin_latitude,
-            origin_longitude: response.data.origin_longitude,
-            destination_address: response.data.destination_address,
-            destination_latitude: response.data.destination_latitude,
-            destination_longitude: response.data.destination_longitude,
-            waypoints_address: response.data.waypoints_address,
-            waypoints_address_latitude:response.data.waypoints_address_latitude,
-            waypoints_address_longitude:response.data.waypoints_address_longitude
+        console.log(response.data);
+        const driverResponse = response.data;
+        setdriverdataName({
+            name: driverResponse.name
         });
-        // console.log(response.data.current_state);
+        setdriverdataTime({
+            time: driverResponse.time
+        });
+        setdriverdataOrigin_address({
+            origin_address: driverResponse.origin_address
+        });
+        setdriverdataOrigin_latitude({
+            origin_latitude: driverResponse.origin_latitude
+        });
+        setdriverdataOrigin_longitude({
+            origin_longitude: driverResponse.origin_longitude
+        });
+        setdriverdataDestination_address({
+            destination_address: driverResponse.destination_address
+        });
+        setdriverdataDestination_latitude({
+            destination_latitude: driverResponse.destination_latitude
+        });
+        setdriverdataDestination_longitude({
+            destination_longitude: driverResponse.destination_longitude
+        });
+        setdriverdataWaypoints_address({
+            waypoints_address: driverResponse.waypoints_address
+        });
+        setdriverdataWaypoints_address_latitude({
+            waypoints_address_latitude: driverResponse.waypoints_address_latitude
+        });
+        setdriverdataWaypoints_address_longitude({
+            waypoints_address_longitude: driverResponse.waypoints_address_longitude
+        });
+        // setdriverdata({
+        //     name: driverResponse.name,
+        //     time: driverResponse.time,
+        //     origin_address: driverResponse.origin_address,
+        //     origin_latitude: driverResponse.origin_latitude,
+        //     origin_longitude: driverResponse.origin_longitude,
+        //     destination_address: driverResponse.destination_address,
+        //     destination_latitude: driverResponse.destination_latitude,
+        //     destination_longitude: driverResponse.destination_longitude,
+        //     waypoints_address: driverResponse.waypoints_address,
+        //     waypoints_address_latitude:driverResponse.waypoints_address_latitude,
+        //     waypoints_address_longitude:driverResponse.waypoints_address_longitude
+        // });
     } catch (error) {
         console.error('Fail:', error);
     }
 };
+
 const fetchCustomerData = async () => {
     try {
         const response = await axios.get(URL +'/passenger');
-        setcusdata({
-            name: response.data.name,
-            time: response.data.time,
-            origin_address: response.data.origin_address,
-            origin_latitude: response.data.origin_latitude,
-            origin_longitude: response.data.origin_longitude,
-            destination_address: response.data.destination_address,
-            destination_latitude: response.data.destination_latitude,
-            destination_longitude: response.data.destination_longitude,
-            waypoints_address: response.data.waypoints_address,
-            waypoints_address_latitude:response.data.waypoints_address_latitude,
-            waypoints_address_longitude:response.data.waypoints_address_longitude
+        console.log(response.data);
+        const customerResponse = response.data;
+        setcusdataName({
+            name: customerResponse.name 
         });
-        // console.log(response.data.current_state);
+        setcusdataTime({ 
+            time: customerResponse.time 
+        });
+        setcusdataOrigin_address({ 
+            origin_address: customerResponse.origin_address 
+        });
+        setcusdataOrigin_latitude({ 
+            origin_latitude: customerResponse.origin_latitude 
+        });
+        setcusdataOrigin_longitude({ 
+            origin_longitude: customerResponse.origin_longitude 
+        });
+        setcusdataDestination_address({ 
+            destination_address: customerResponse.destination_address 
+        });
+        setcusdataDestination_latitude({ 
+            destination_latitude: customerResponse.destination_latitude 
+        });
+        setcusdataDestination_longitude({ 
+            destination_longitude: customerResponse.destination_longitude 
+        });
+        setcusdataWaypoints_address({ 
+            waypoints_address: customerResponse.waypoints_address 
+        });
+        setcusdataWaypoints_latitude({ 
+            waypoints_address_latitude: customerResponse.waypoints_address_latitude 
+        });
+        setcusdataWaypoints_longitude({ 
+            waypoints_address_longitude: customerResponse.waypoints_address_longitude 
+        });
+        // setcusdata({
+        //     name: customerResponse.name,
+        //     time: customerResponse.time,
+        //     origin_address: customerResponse.origin_address,
+        //     origin_latitude: customerResponse.origin_latitude,
+        //     origin_longitude: customerResponse.origin_longitude,
+        //     destination_address: customerResponse.destination_address,
+        //     destination_latitude: customerResponse.destination_latitude,
+        //     destination_longitude: customerResponse.destination_longitude,
+        //     waypoints_address: customerResponse.waypoints_address,
+        //     waypoints_address_latitude:customerResponse.waypoints_address_latitude,
+        //     waypoints_address_longitude:customerResponse.waypoints_address_longitude
+        // });
     } catch (error) {
         console.error('Fail:', error);
     }
 };
 const _map = useRef(1);
 
+let flag1 = false;
 
 useEffect(()=>{
-    checkPermission();
-    getLocation();
-    // console.log(User.name);
-    fetchCustomerData();
-    fetchDriverData()
-    setUserOrigin({latitude:driverdata.origin_latitude,
-        longitude:driverdata.origin_longitude});
-    setUserDestination({latitude:driverdata.destination_latitude,
-        longitude:driverdata.destination_longitude});
-    setUserWaypoint({latitude:driverdata.waypoints_address_latitude,
-        longitude:driverdata.waypoints_address_longitude});
-    setCusOrigin({latitude:cusdata.origin_latitude,
-        longitude:cusdata.origin_longitude});
-                        
-
+    async function fetchdata(){
+        await fetchCustomerData();
+        await fetchDriverData();
+        flag1 = true;
+        setUserOrigin({latitude:parseFloat(driverdataOrigin_latitude.origin_latitude),
+            longitude:parseFloat(driverdataOrigin_longitude.origin_longitude)});
+        setUserDestination({latitude:parseFloat(driverdataDestination_latitude.destination_latitude),
+            longitude: parseFloat(driverdataDestination_longitude.destination_longitude)});
+        setUserWaypoint({latitude:parseFloat(driverdataWaypoints_address_latitude.waypoints_address_latitude),
+            longitude:parseFloat(driverdataWaypoints_address_longitude.waypoints_address_longitude)});
+        setCusOrigin({latitude:parseFloat(cusdataOrigin_latitude.origin_latitude),
+            longitude:parseFloat(cusdataOrigin_longitude.origin_longitude)});
+        console.log("driverdata: ", driverdataOrigin_longitude);
+        console.log("driverdata: ", driverdataOrigin_latitude);
+        console.log("cusdata: ", cusdataName);
+        console.log("cusdata: ", cusdataTime);
+        console.log("cusdata: ", cusdataOrigin_address.origin_address);
+        console.log("start:", CusOrigin);
+    }
+    fetchdata();
 },[])
-
 
     return (
         <View style ={styles.container}>
             
             <ScrollView bounces ={false}>
                 <View style ={styles.home}>
-                    <Text style = {styles.text1}>Match!!!</Text>
+                    <Text style = {styles.text1}>Match !!!</Text>
                     
                 </View>
-
-               
-                    
-               
-
                     <View style ={{...styles.view5,borderBottomWidth:0}}>
                         <View style ={styles.view6}>
                             <View style ={styles.view7}>
@@ -175,9 +309,13 @@ useEffect(()=>{
                                 />
                             </View>
                             <View>
-                                <Text style ={{fontSize:18,color:colors.black}}>Name of Driver</Text>
-                                <Text style ={{color:colors.grey3}}>Plate Number</Text>
+                                <Text style ={{fontSize:18,color:colors.black}}>Driver:{driverdataName.name}</Text>
+                                <Text style ={{color:colors.grey3}}>FCN-0857</Text>
+                                <Text style ={{color:colors.grey3}}>出發時間:{driverdataTime.time}</Text>
+                                <Text style ={{fontSize:18,color:colors.black}}>Customer:{cusdataName.name}</Text>
+                                <Text style ={{color:colors.grey3}}>出發時間:{cusdataTime.time}</Text>
                             </View>
+                            
                         </View>
                         <View>
                             <Icon type = "material-community"
@@ -219,7 +357,7 @@ useEffect(()=>{
                         <MapViewDirections 
                           origin={DriverOrigin}
                           destination={DriverDestination}
-                          waypoints = {[DriverWaypoint,CusOrigin]}
+                          waypoints = {[CusOrigin]}
                           optimizeWaypoints = {true}
                             apikey={GOOGLE_MAPS_APIKEY}
 
@@ -371,9 +509,9 @@ const styles = StyleSheet.create({
     
     map:{
        
-    height: 150,
+    height: 600,
      marginVertical: 0,
-     width:SCREEN_WIDTH*0.92
+     width:SCREEN_WIDTH
     },
     
     text4:{ fontSize:20,

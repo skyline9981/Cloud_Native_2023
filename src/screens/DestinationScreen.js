@@ -132,7 +132,7 @@ const DestinationScreen = ({navigation}) => {
                         .catch(error => {
                             console.error(error);
                         });
-
+                    
                     navigation.navigate("MatchScreen", { state: 0 })
                 }}
 
