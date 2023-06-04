@@ -18,6 +18,7 @@ const {origin,dispatchOrigin} = useContext(OriginContext)
 const {destination,dispatchDestination} = useContext(DestinationContext)
 const [latlng,setLatLng] = useState({})
 
+
 const checkPermission =async()=>{
     const hasPermission = await Location.requestForegroundPermissionsAsync();
     if(hasPermission.status === 'granted') {
@@ -47,14 +48,85 @@ const getLocation = async()=>{
     }
 }
 
+const [driverdata,setdriverdata] = useState({
+    name: "",
+    time: "",                        
+    origin_address: "",
+    origin_latitude: "",
+    origin_longitude: "",
+    destination_address: "",
+    destination_latitude: "",
+    destination_longitude: "",
+    waypoints_address: "",
+    waypoints_address_latitude:"",
+    waypoints_address_longitude:""
+})
+const [cusdata,setcusdata] = useState({
+    name: "",
+    time: "",                        
+    origin_address: "",
+    origin_latitude: "",
+    origin_longitude: "",
+    destination_address: "",
+    destination_latitude: "",
+    destination_longitude: "",
+    waypoints_address: "",
+    waypoints_address_latitude:"",
+    waypoints_address_longitude:""
+})
+
+const fetchDriverData = async () => {
+    try {
+        const response = await axios.get(URL +'/driver');
+        setdriverdata({
+            name: response.data.name,
+            time: response.data.time,
+            origin_address: response.data.origin_address,
+            origin_latitude: response.data.origin_latitude,
+            origin_longitude: response.data.origin_longitude,
+            destination_address: response.data.destination_address,
+            destination_latitude: response.data.destination_latitude,
+            destination_longitude: response.data.destination_longitude,
+            waypoints_address: response.data.waypoints_address,
+            waypoints_address_latitude:response.data.waypoints_address_latitude,
+            waypoints_address_longitude:response.data.waypoints_address_longitude
+        });
+        console.log(response.data.current_state);
+    } catch (error) {
+        console.error('Fail:', error);
+    }
+};
+const fetchCustomerData = async () => {
+    try {
+        const response = await axios.get(URL +'/passenger');
+        setcusdata({
+            name: response.data.name,
+            time: response.data.time,
+            origin_address: response.data.origin_address,
+            origin_latitude: response.data.origin_latitude,
+            origin_longitude: response.data.origin_longitude,
+            destination_address: response.data.destination_address,
+            destination_latitude: response.data.destination_latitude,
+            destination_longitude: response.data.destination_longitude,
+            waypoints_address: response.data.waypoints_address,
+            waypoints_address_latitude:response.data.waypoints_address_latitude,
+            waypoints_address_longitude:response.data.waypoints_address_longitude
+        });
+        console.log(response.data.current_state);
+    } catch (error) {
+        console.error('Fail:', error);
+    }
+};
 const _map = useRef(1);
 
 
 useEffect(()=>{
     checkPermission();
-    getLocation()
-    console.log(User.name)
-,[]})
+    getLocation();
+    console.log(User.name);
+    fetchCustomerData();
+    fetchDriverData()
+},[])
 
 
     return (
@@ -96,14 +168,14 @@ useEffect(()=>{
                     <Text style ={styles.text4}>Path</Text>
 
                     <View>
-                {/* <MapView
+                <MapView
                     provider ={PROVIDER_GOOGLE}
                     style = {styles.map}
                     customMapStyle ={mapStyle}
                     ref = {this._map}
                         >                       
-                     { this.props.userOrigin.latitude != null &&   
-                        <Marker coordinate = {this.props.userOrigin} anchor = {{x:0.5,y:0.5}} >
+                     { driverdata.origin_latitude != null &&   
+                        <Marker coordinate = {{latitude:driverdata.origin_latitude,longitude:driverdata.origin_longitude}} anchor = {{x:0.5,y:0.5}} >
                             <Image 
                                 source ={require('../../assets/location.png')}
                                 style ={styles.markerOrigin2}
@@ -111,8 +183,8 @@ useEffect(()=>{
                             />
                         </Marker>
                      }
-                     { this.props.userDestination.latitude != null &&   
-                        <Marker coordinate = {this.props.userDestination} anchor = {{x:0.5,y:0.5}} >
+                     { driverdata.destination_latitude != null &&   
+                        <Marker coordinate = {{latitude:driverdata.destination_latitude,longitude:driverdata.destination_longitude}} anchor = {{x:0.5,y:0.5}} >
                             <Image 
                                 source ={require('../../assets/location.png')}
                                 style ={styles.markerDestination}
@@ -120,16 +192,20 @@ useEffect(()=>{
                             />
                         </Marker>
                      }
-                    {this.props.userDestination.latitude !== null &&
+                    { driverdata.origin_latitude !== null &&
                         <MapViewDirections 
-                          origin={this.props.userOrigin}
-                          destination={this.props.userDestination}
-                          apikey={GOOGLE_MAPS_APIKEY}
+                          origin={{latitude:driverdata.origin_latitude,longitude:driverdata.origin_longitude}}
+                          destination={{latitude:driverdata.destination_latitude,longitude:driverdata.destination_latitude}}
+                          waypoints = {[{latitude:driverdata.waypoints_address_latitude,longitude:driverdata.waypoints_address_longitude},
+                            {latitude:cusdata.origin_latitude,longitude:cusdata.origin_longitude}]}
+                          optimizeWaypoints = {true}
+                            apikey={GOOGLE_MAPS_APIKEY}
+
                           strokeWidth={4}
                           strokeColor={colors.black}
                         />
                     }
-                </MapView>  */}
+                </MapView>  
             </View>
             </ScrollView>
             <StatusBar style ="light" backgroundColor = "#2058c0" translucent ={true} />
