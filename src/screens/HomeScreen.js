@@ -51,6 +51,7 @@ const [data, setdata] = useState({
 
 const fetchData = async () => {
     try {
+        console.log('test');
         const response = await axios.get(URL);
         setdata({
             current_state: response.data.current_state,

@@ -117,6 +117,7 @@ const DestinationScreen = ({navigation}) => {
                         name:details.name
                     }})
                     setwaypoints(true)
+                    console.log(details.formatted_address);
 
                     }}
 
@@ -148,6 +149,7 @@ const DestinationScreen = ({navigation}) => {
                         address:details.formatted_address,
                         name:details.name
                     }})
+                    
 
                     axios.post(URL + '/driver', {
                         name: User.name,
@@ -155,12 +157,12 @@ const DestinationScreen = ({navigation}) => {
                         origin_address: origin.address,
                         origin_latitude: origin.latitude,
                         origin_longitude: origin.longitude,
-                        destination_address: destination.formatted_address,
+                        destination_address: destination.address,
                         destination_latitude: destination.latitude,
                         destination_longitude: destination.longitude,
-                        waypoint_address: details.formatted_address,
-                        waypoint_latitude: details.geometry.location.lat,
-                        waypoint_longitude: details.geometry.location.lng
+                        waypoints_address: details.formatted_address,
+                        waypoints_address_latitude: details.geometry.location.lat,
+                        waypoints_address_longitude: details.geometry.location.lng
                     })
                         .then(response => {
                             console.log(response.data);

@@ -5,7 +5,7 @@ from flask_cors import CORS
 import os
 import dotenv
 
-from sqlalchemy import create_engine, Column, String, Integer
+from sqlalchemy import create_engine, Column, String, Integer, text
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -73,3 +73,11 @@ session.commit()
 
 # Close the session
 session.close()
+
+sql_cmd = """
+        select * from cus_drive_data where id=1
+        """
+conn = engine.connect()
+query_data = conn.execute(text(sql_cmd)).fetchall()
+
+# print(query_data['name'])

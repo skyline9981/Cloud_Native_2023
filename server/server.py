@@ -42,9 +42,9 @@ class CurDriveData(Base):
     destination_address = Column(String)
     destination_latitude = Column(String)
     destination_longitude = Column(String)
-    waypoint_address = Column(String)
-    waypoint_address_latitude = Column(String)
-    waypoint_address_longitude = Column(String) 
+    waypoints_address = Column(String)
+    waypoints_address_latitude = Column(String)
+    waypoints_address_longitude = Column(String) 
 
 # Create the table if it doesn't exist
 Base.metadata.create_all(engine)
@@ -61,9 +61,35 @@ origin_longitude = "no data"
 destination_address = "no data"
 destination_latitude = "no data" 
 destination_longitude = "no data"
-waypoint_address = "no data"
-waypoint_address_latitude = "no data"
-waypoint_address_longitude = "no data"
+waypoints_address = "no data"
+waypoints_address_latitude = "no data"
+waypoints_address_longitude = "no data"
+
+def get_current_customer_id():
+    li = []
+    sql_cmd = """
+    select id,type 
+    from cus_drive_data
+    """
+    conn = engine.connect()
+    query_data = conn.execute(text(sql_cmd)).fetchall()
+    for row in query_data:
+        if(row[1] == "customer"):
+            li.append(row[0])
+    return li[-1]
+
+def get_current_driver_id():
+    li = []
+    sql_cmd = """
+    select id,type 
+    from cus_drive_data
+    """
+    conn = engine.connect()
+    query_data = conn.execute(text(sql_cmd)).fetchall()
+    for row in query_data:
+        if(row[1] == "driver"):
+            li.append(row[0])
+    return li[-1]
 
 @app.route('/', methods=["GET","POST"])
 def get_data():
@@ -94,18 +120,27 @@ def get_data():
 def get_passenger_data():
     global name, time, origin_address, origin_latitude, origin_longitude, destination_address, destination_latitude, destination_longitude
     if request.method == "GET":
+        
+        customer_id = get_current_customer_id()
+        sql_cmd = f"""
+        select * from cus_drive_data where id={customer_id}
+        """
+        conn = engine.connect()
+        query_data = conn.execute(text(sql_cmd)).fetchall()
+        
+        
         return jsonify({'role': "passenger",
-                        'name': name,
-                        'time': time,                        
-                        'origin_address': origin_address,
-                        'origin_latitude': origin_latitude,
-                        'origin_longitude': origin_longitude,
-                        'destination_address': destination_address,
-                        'destination_latitude': destination_latitude,
-                        'destination_longitude': destination_longitude,
-                        'waypoint_address': "",
-                        'waypoint_address_latitude':"",
-                        'waypoint_address_longitude':""})
+                        'name': query_data[1],
+                        'time': query_data[3],                        
+                        'origin_address': query_data[4],
+                        'origin_latitude': query_data[5],
+                        'origin_longitude': query_data[6],
+                        'destination_address': query_data[7],
+                        'destination_latitude': query_data[8],
+                        'destination_longitude': query_data[9],
+                        'waypoints_address': "",
+                        'waypoints_address_latitude':"",
+                        'waypoints_address_longitude':""})
 
     elif request.method == "POST":
         print("enter user destination point")
@@ -113,9 +148,9 @@ def get_passenger_data():
 
         hard_code = {
             "type": "customer",
-            "waypoint_address" : '',
-            "waypoint_address_latitude" : '',
-            "waypoint_address_longitude" : '',
+            "waypoints_address" : '',
+            "waypoints_address_latitude" : '',
+            "waypoints_address_longitude" : '',
         }
         
         data = {**req, **hard_code}
@@ -134,27 +169,34 @@ def get_passenger_data():
                         'destination_address': destination_address,
                         'destination_latitude': destination_latitude,
                         'destination_longitude': destination_longitude,
-                        'waypoint_address': "",
-                        'waypoint_address_latitude':"",
-                        'waypoint_address_longitude':""})
+                        'waypoints_address': "",
+                        'waypoints_address_latitude':"",
+                        'waypoints_address_longitude':""})
 
 @app.route('/driver', methods=["GET","POST"])
 def get_driver_data():
     global name, time, origin_address, origin_latitude, origin_longitude, destination_address, destination_latitude, destination_longitude
     if request.method == "GET":
-        return jsonify({'role': "Driver",
-                        'name': name,
-                        'time': time,                        
-                        'origin_address': origin_address,
-                        'origin_latitude': origin_latitude,
-                        'origin_longitude': origin_longitude,
-                        'destination_address': destination_address,
-                        'destination_latitude': destination_latitude,
-                        'destination_longitude': destination_longitude,
-                        'waypoint_address': waypoint_address,
-                        'waypoint_address_latitude':waypoint_address_latitude,
-                        'waypoint_address_longitude':waypoint_address_longitude})
-
+        driver_id = get_current_driver_id()
+        sql_cmd = f"""
+        select * from cus_drive_data where id={driver_id}
+        """
+        conn = engine.connect()
+        query_data = conn.execute(text(sql_cmd)).fetchall()
+        
+        return jsonify({'role': "driver",
+                        'name': query_data[1],
+                        'time': query_data[3],                        
+                        'origin_address': query_data[4],
+                        'origin_latitude': query_data[5],
+                        'origin_longitude': query_data[6],
+                        'destination_address': query_data[7],
+                        'destination_latitude': query_data[8],
+                        'destination_longitude': query_data[9],
+                        'waypoints_address': query_data[10],
+                        'waypoints_address_latitude':query_data[11],
+                        'waypoints_address_longitude':query_data[12]})
+    
     elif request.method == "POST":
         print("enter driver way point")
         req = request.get_json()
@@ -179,9 +221,9 @@ def get_driver_data():
                         'destination_address': destination_address,
                         'destination_latitude': destination_latitude,
                         'destination_longitude': destination_longitude,
-                        'waypoint_address': waypoint_address,
-                        'waypoint_address_latitude':waypoint_address_latitude,
-                        'waypoint_address_longitude':waypoint_address_longitude})
+                        'waypoints_address': waypoints_address,
+                        'waypoints_address_latitude':waypoints_address_latitude,
+                        'waypoints_address_longitude':waypoints_address_longitude})
 
 
 # Running app
