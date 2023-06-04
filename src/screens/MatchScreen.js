@@ -20,6 +20,16 @@ const {User,dispatchUser} = useContext(UserNameAndTime)
 const {origin,dispatchOrigin} = useContext(OriginContext)
 const {destination,dispatchDestination} = useContext(DestinationContext)
 const [latlng,setLatLng] = useState({})
+const [DriverOrigin,setUserOrigin] = useState({latitude:origin.latitude,
+                longitude:origin.longitude})
+const [DriverDestination,setUserDestination] = useState({latitude:destination.latitude,
+                longitude:destination.longitude}) 
+const [DriverWaypoint,setUserWaypoint] = useState({latitude:destination.latitude,
+                longitude:destination.longitude}) 
+const [CusOrigin,setCusOrigin] = useState({latitude:destination.latitude,
+                longitude:destination.longitude}) 
+
+
 
 
 const checkPermission =async()=>{
@@ -129,6 +139,16 @@ useEffect(()=>{
     // console.log(User.name);
     fetchCustomerData();
     fetchDriverData()
+    setUserOrigin({latitude:driverdata.origin_latitude,
+        longitude:driverdata.origin_longitude});
+    setUserDestination({latitude:driverdata.destination_latitude,
+        longitude:driverdata.destination_longitude});
+    setUserWaypoint({latitude:driverdata.waypoints_address_latitude,
+        longitude:driverdata.waypoints_address_longitude});
+    setCusOrigin({latitude:cusdata.origin_latitude,
+        longitude:cusdata.origin_longitude});
+                        
+
 },[])
 
 
@@ -177,8 +197,8 @@ useEffect(()=>{
                     customMapStyle ={mapStyle}
                     ref = {this._map}
                         >                       
-                     { driverdata.origin_latitude != null &&   
-                        <Marker coordinate = {{latitude:driverdata.origin_latitude,longitude:driverdata.origin_longitude}} anchor = {{x:0.5,y:0.5}} >
+                     { DriverOrigin.latitude != null &&   
+                        <Marker coordinate = {DriverOrigin} anchor = {{x:0.5,y:0.5}} >
                             <Image 
                                 source ={require('../../assets/location.png')}
                                 style ={styles.markerOrigin2}
@@ -186,8 +206,8 @@ useEffect(()=>{
                             />
                         </Marker>
                      }
-                     { driverdata.destination_latitude != null &&   
-                        <Marker coordinate = {{latitude:driverdata.destination_latitude,longitude:driverdata.destination_longitude}} anchor = {{x:0.5,y:0.5}} >
+                     { DriverDestination.latitude != null &&   
+                        <Marker coordinate = {DriverDestination} anchor = {{x:0.5,y:0.5}} >
                             <Image 
                                 source ={require('../../assets/location.png')}
                                 style ={styles.markerDestination}
@@ -195,12 +215,11 @@ useEffect(()=>{
                             />
                         </Marker>
                      }
-                    { driverdata.origin_latitude !== null &&
+                    { DriverWaypoint.latitude !== null && CusOrigin.latitude !== null &&
                         <MapViewDirections 
-                          origin={{latitude:driverdata.origin_latitude,longitude:driverdata.origin_longitude}}
-                          destination={{latitude:driverdata.destination_latitude,longitude:driverdata.destination_latitude}}
-                          waypoints = {[{latitude:driverdata.waypoints_address_latitude,longitude:driverdata.waypoints_address_longitude},
-                            {latitude:cusdata.origin_latitude,longitude:cusdata.origin_longitude}]}
+                          origin={DriverOrigin}
+                          destination={DriverDestination}
+                          waypoints = {[DriverWaypoint,CusOrigin]}
                           optimizeWaypoints = {true}
                             apikey={GOOGLE_MAPS_APIKEY}
 
