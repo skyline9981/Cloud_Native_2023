@@ -42,9 +42,9 @@ class CurDriveData(Base):
     destination_address = Column(String)
     destination_latitude = Column(String)
     destination_longitude = Column(String)
-    waypoints_address = Column(String)
-    waypoints_address_latitude = Column(String)
-    waypoints_address_longitude = Column(String) 
+    waypoint_address = Column(String)
+    waypoint_address_latitude = Column(String)
+    waypoint_address_longitude = Column(String) 
 
 # Create the table if it doesn't exist
 Base.metadata.create_all(engine)
@@ -52,30 +52,18 @@ Base.metadata.create_all(engine)
 # Create a session to interact with the database
 Session = sessionmaker(bind=engine)
 
-cus_start_point = "no enter"
-cus_destination_point = "no enter"
-cus_latitude_start = "no enter"
-cus_longitude_start = "no enter"
-cus_latitude_end = "no enter"
-cus_longitude_end = "no enter"
-driver_start_point = "no enter"
-driver_destination_point = "no enter"
-driver_way_point = "no enter"
-driver_latitude_start = "no enter"
-driver_longitude_start = "no enter"
-driver_latitude_end = "no enter"
-driver_longitude_end = "no enter"
-driver_latitude_way = "no enter"
-driver_longitude_way = "no enter"
 
-name = ""
-time = ""
-origin_address = ""
-origin_latitude = ""
-origin_longitude = ""
-destination_address = ""
-destination_latitude = "" 
-destination_longitude = ""
+name = "no data"
+time = "no data"
+origin_address = "no data"
+origin_latitude = "no data"
+origin_longitude = "no data"
+destination_address = "no data"
+destination_latitude = "no data" 
+destination_longitude = "no data"
+waypoint_address = "no data"
+waypoint_address_latitude = "no data"
+waypoint_address_longitude = "no data"
 
 @app.route('/', methods=["GET","POST"])
 def get_data():
@@ -101,18 +89,12 @@ def get_data():
         current_state = data.get('current_state')
         return jsonify({'current_state': current_state})
 
-@app.route('/ttt', methods=["GET"])
-def get_data2():
-    global current_state1
-    if request.method == "GET":
-        return jsonify({'current_state1': current_state1})
 
-
-@app.route('/cus_start_point', methods=["GET","POST"])
-def get_position():
+@app.route('/passenger', methods=["GET","POST"])
+def get_passenger_data():
     global name, time, origin_address, origin_latitude, origin_longitude, destination_address, destination_latitude, destination_longitude
     if request.method == "GET":
-        return jsonify({'role': "User",
+        return jsonify({'role': "passenger",
                         'name': name,
                         'time': time,                        
                         'origin_address': origin_address,
@@ -121,9 +103,9 @@ def get_position():
                         'destination_address': destination_address,
                         'destination_latitude': destination_latitude,
                         'destination_longitude': destination_longitude,
-                        'waypoints_address': "",
-                        'waypoints_address_latitude':"",
-                        'waypoints_address_longitude':""})
+                        'waypoint_address': "",
+                        'waypoint_address_latitude':"",
+                        'waypoint_address_longitude':""})
 
     elif request.method == "POST":
         print("enter user destination point")
@@ -131,9 +113,9 @@ def get_position():
 
         hard_code = {
             "type": "customer",
-            "waypoints_address" : '',
-            "waypoints_address_latitude" : '',
-            "waypoints_address_longitude" : '',
+            "waypoint_address" : '',
+            "waypoint_address_latitude" : '',
+            "waypoint_address_longitude" : '',
         }
         
         data = {**req, **hard_code}
@@ -143,7 +125,7 @@ def get_position():
             session.add(new_record)
             session.commit()
         
-        return jsonify({'role': "User",
+        return jsonify({'role': "passenger",
                         'name': name,
                         'time': time,                        
                         'origin_address': origin_address,
@@ -152,57 +134,55 @@ def get_position():
                         'destination_address': destination_address,
                         'destination_latitude': destination_latitude,
                         'destination_longitude': destination_longitude,
-                        'waypoints_address': "",
-                        'waypoints_address_latitude':"",
-                        'waypoints_address_longitude':""})
+                        'waypoint_address': "",
+                        'waypoint_address_latitude':"",
+                        'waypoint_address_longitude':""})
 
-@app.route('/driver_start_point', methods=["GET","POST"])
-def get_position3():
-    global driver_start_point, driver_latitude_start, driver_longitude_start
+@app.route('/driver', methods=["GET","POST"])
+def get_driver_data():
+    global name, time, origin_address, origin_latitude, origin_longitude, destination_address, destination_latitude, destination_longitude
     if request.method == "GET":
-        return jsonify({'address': driver_start_point})
+        return jsonify({'role': "Driver",
+                        'name': name,
+                        'time': time,                        
+                        'origin_address': origin_address,
+                        'origin_latitude': origin_latitude,
+                        'origin_longitude': origin_longitude,
+                        'destination_address': destination_address,
+                        'destination_latitude': destination_latitude,
+                        'destination_longitude': destination_longitude,
+                        'waypoint_address': waypoint_address,
+                        'waypoint_address_latitude':waypoint_address_latitude,
+                        'waypoint_address_longitude':waypoint_address_longitude})
 
     elif request.method == "POST":
-        print("enter start point")
-        data = request.get_json()
-        driver_start_point = data.get('address')
-        driver_latitude_start = data.get('latitude')
-        driver_longitude_start = data.get('longitude')
-        return jsonify({'address': driver_start_point,
-                        'latitude':driver_latitude_start,
-                        'longitude':driver_longitude_start})
+        print("enter driver way point")
+        req = request.get_json()
 
-@app.route('/driver_destination_point', methods=["GET","POST"])
-def get_position4():
-    global driver_destination_point, driver_latitude_end, driver_longitude_end
-    if request.method == "GET":
-        return jsonify({'address': driver_destination_point})
+        hard_code = {
+            "type": "driver",
+        }
+        
+        data = {**req, **hard_code}
+        
+        with Session() as session:
+            new_record = CurDriveData(**data)
+            session.add(new_record)
+            session.commit()
+        
+        return jsonify({'role': "Driver",
+                        'name': name,
+                        'time': time,                        
+                        'origin_address': origin_address,
+                        'origin_latitude': origin_latitude,
+                        'origin_longitude': origin_longitude,
+                        'destination_address': destination_address,
+                        'destination_latitude': destination_latitude,
+                        'destination_longitude': destination_longitude,
+                        'waypoint_address': waypoint_address,
+                        'waypoint_address_latitude':waypoint_address_latitude,
+                        'waypoint_address_longitude':waypoint_address_longitude})
 
-    elif request.method == "POST":
-        print("enter destination point")
-        data = request.get_json()
-        driver_destination_point = data.get('address')
-        driver_latitude_end = data.get('latitude')
-        driver_longitude_end = data.get('longitude')
-        return jsonify({'address': driver_destination_point,
-                        'latitude':driver_latitude_end,
-                        'longitude':driver_longitude_end})
-
-@app.route('/driver_way_point', methods=["GET","POST"])
-def get_position5():
-    global driver_way_point, driver_latitude_way, driver_longitude_way
-    if request.method == "GET":
-        return jsonify({'address': driver_way_point})
-
-    elif request.method == "POST":
-        print("enter way point")
-        data = request.get_json()
-        driver_way_point = data.get('address')
-        driver_latitude_way = data.get('latitude')
-        driver_longitude_way = data.get('longitude')
-        return jsonify({'address': driver_way_point,
-                        'latitude':driver_latitude_way,
-                        'longitude':driver_longitude_way})
 
 # Running app
 if __name__ == '__main__':

@@ -149,7 +149,7 @@ const DestinationScreen = ({navigation}) => {
                         name:details.name
                     }})
 
-                    axios.post(URL + '/DRIVER', {
+                    axios.post(URL + '/driver', {
                         name: User.name,
                         time: User.time,                        
                         origin_address: origin.address,
