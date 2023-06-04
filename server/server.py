@@ -130,14 +130,14 @@ def get_passenger_data():
         
         
         return jsonify({'role': "passenger",
-                        'name': query_data[1],
-                        'time': query_data[3],                        
-                        'origin_address': query_data[4],
-                        'origin_latitude': query_data[5],
-                        'origin_longitude': query_data[6],
-                        'destination_address': query_data[7],
-                        'destination_latitude': query_data[8],
-                        'destination_longitude': query_data[9],
+                        'name': query_data[0][1],
+                        'time': query_data[0][3],                        
+                        'origin_address': query_data[0][4],
+                        'origin_latitude': query_data[0][5],
+                        'origin_longitude': query_data[0][6],
+                        'destination_address': query_data[0][7],
+                        'destination_latitude': query_data[0][8],
+                        'destination_longitude': query_data[0][9],
                         'waypoints_address': "",
                         'waypoints_address_latitude':"",
                         'waypoints_address_longitude':""})
@@ -185,17 +185,17 @@ def get_driver_data():
         query_data = conn.execute(text(sql_cmd)).fetchall()
         
         return jsonify({'role': "driver",
-                        'name': query_data[1],
-                        'time': query_data[3],                        
-                        'origin_address': query_data[4],
-                        'origin_latitude': query_data[5],
-                        'origin_longitude': query_data[6],
-                        'destination_address': query_data[7],
-                        'destination_latitude': query_data[8],
-                        'destination_longitude': query_data[9],
-                        'waypoints_address': query_data[10],
-                        'waypoints_address_latitude':query_data[11],
-                        'waypoints_address_longitude':query_data[12]})
+                        'name': query_data[0][1],
+                        'time': query_data[0][3],                        
+                        'origin_address': query_data[0][4],
+                        'origin_latitude': query_data[0][5],
+                        'origin_longitude': query_data[0][6],
+                        'destination_address': query_data[0][7],
+                        'destination_latitude': query_data[0][8],
+                        'destination_longitude': query_data[0][9],
+                        'waypoints_address': query_data[0][10],
+                        'waypoints_address_latitude':query_data[0][11],
+                        'waypoints_address_longitude':query_data[0][12]})
     
     elif request.method == "POST":
         print("enter driver way point")

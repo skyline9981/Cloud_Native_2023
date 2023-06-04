@@ -9,7 +9,10 @@ import { OriginContext,DestinationContext,UserNameAndTime } from '../contexts/co
 const SCREEN_WIDTH = Dimensions.get('window').width
 import { colors,parameters } from '../global/styles'
 import { filterData,carsAround } from '../global/data'
+import MapViewDirections from 'react-native-maps-directions';
 import { mapStyle} from "../global/mapStyle"
+import {GOOGLE_MAPS_APIKEY, URL} from "@env";
+import axios from 'axios';
 
 const HomeScreen = ({navigation}) => {
 const {User,dispatchUser} = useContext(UserNameAndTime)
@@ -91,7 +94,7 @@ const fetchDriverData = async () => {
             waypoints_address_latitude:response.data.waypoints_address_latitude,
             waypoints_address_longitude:response.data.waypoints_address_longitude
         });
-        console.log(response.data.current_state);
+        // console.log(response.data.current_state);
     } catch (error) {
         console.error('Fail:', error);
     }
@@ -112,7 +115,7 @@ const fetchCustomerData = async () => {
             waypoints_address_latitude:response.data.waypoints_address_latitude,
             waypoints_address_longitude:response.data.waypoints_address_longitude
         });
-        console.log(response.data.current_state);
+        // console.log(response.data.current_state);
     } catch (error) {
         console.error('Fail:', error);
     }
@@ -123,7 +126,7 @@ const _map = useRef(1);
 useEffect(()=>{
     checkPermission();
     getLocation();
-    console.log(User.name);
+    // console.log(User.name);
     fetchCustomerData();
     fetchDriverData()
 },[])

@@ -74,10 +74,16 @@ session.commit()
 # Close the session
 session.close()
 
+# customer_id = 1
+# sql_cmd = f"""
+# select * from cus_drive_data where id={customer_id}
+# """
+# print(sql_cmd)
+
 sql_cmd = """
-        select * from cus_drive_data where id=1
+        select * from cus_drive_data where id = 1;
         """
 conn = engine.connect()
 query_data = conn.execute(text(sql_cmd)).fetchall()
 
-# print(query_data['name'])
+# print(query_data[0][1])
