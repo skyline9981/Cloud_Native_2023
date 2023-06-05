@@ -326,7 +326,7 @@ useEffect(()=>{
                             </View>
                     </View>  
 
-                    <Text style ={styles.text4}>Path</Text>
+                    <Text style ={styles.text4}>Path1</Text>
 
                     <View>
                 <MapView

@@ -91,13 +91,13 @@ useEffect(()=>{
                         <View  style ={styles.view8}>
                             <TouchableOpacity onPress={() => {
                                 navigation.navigate("RequestScreen", { state: 0 })
-                                console.log('test');
+                                console.log('test', URL);
                                 axios.post( URL +'/', { current_state: 'cus login' })
                                     .then(response => {
                                         console.log(response.data);
                                     })
                                     .catch(error => {
-                                        console.log("test");
+                                        // console.log("test");
                                         console.error(error);
                                     });
                             }}>

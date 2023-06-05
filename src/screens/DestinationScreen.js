@@ -115,7 +115,7 @@ const DestinationScreen = ({navigation}) => {
                         address:details.formatted_address,
                         name:details.name
                     }})
-                    console.log(URL);
+                    console.log("destination: ",URL);
                     axios.post(URL + '/passenger', {
                         name: User.name,
                         time: User.time,                        
