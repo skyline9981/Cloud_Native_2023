@@ -6,11 +6,18 @@ node -v
 ```
 if not, install first.
 
-## Run
+## Build
 ```
 git clone [this repo]
 cd [this repo]
+cp .env.sample .env
 yarn
+pip install -r requirements.txt
+docker-compose up
+```
+## Run
+```
+python .\server\server.py
 npx expo start
 [scan the QR code]
 ```
