@@ -15,6 +15,7 @@ yarn
 pip install -r requirements.txt
 docker-compose up
 ```
+## Make sure you have changed the info in .env
 ## Run
 ```
 python .\server\server.py
