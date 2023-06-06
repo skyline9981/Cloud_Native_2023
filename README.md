@@ -8,12 +8,12 @@ if not, install first.
 
 ## Build
 ```
-git clone [this repo]
-cd [this repo]
+git clone [this repo](https://github.com/skyline9981/Cloud_Native_2023.git)
+cd Cloud_Native_2023
 cp .env.sample .env
 yarn
 pip install -r requirements.txt
-docker-compose up
+docker-compose up -d
 ```
 ## Make sure you have changed the info in .env
 ## Run
