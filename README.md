@@ -8,7 +8,7 @@ if not, install first.
 
 ## Build
 ```
-git clone [this repo](https://github.com/skyline9981/Cloud_Native_2023.git)
+git clone https://github.com/skyline9981/Cloud_Native_2023.git
 cd Cloud_Native_2023
 cp .env.sample .env
 yarn
